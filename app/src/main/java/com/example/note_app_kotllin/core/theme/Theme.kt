@@ -1,4 +1,4 @@
-package com.example.note_app_kotllin.ui.theme
+package com.example.note_app_kotllin.core.theme
 
 import android.os.Build
 import androidx.compose.material3.MaterialTheme

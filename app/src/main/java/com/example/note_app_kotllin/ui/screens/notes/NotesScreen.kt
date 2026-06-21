@@ -111,7 +111,9 @@ fun EmptyState() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            stringResource(R.string.notes_empty_state_msg)
+            text = stringResource(R.string.notes_empty_state),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

@@ -1,6 +1,25 @@
 <resources>
+    <!-- ===== General ===== -->
+    <string name="app_name">Note App</string>
+    <string name="cd_back">Back</string>
+
+    <!-- ===== Notes ===== -->
+    <string name="notes_empty_state">No notes yet. Click the + button to add one.</string>
+
+    <!-- ===== Note Detail ===== -->
+    <string name="cd_delete">Delete note</string>
     <string name="cd_share">Share note</string>
     <string name="hint_title">Title</string>
     <string name="hint_subtitle">Subtitle</string>
-    <string name="cd_delete">Delete note</string>
+
+    <!-- ===== Settings ===== -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_dark_mode">Dark Mode</string>
+
+    <!-- ===== Language Sheet ===== -->
+    <string name="language_sheet_title">Select Language</string>
+    <string name="lang_az">Azərbaycan dili</string>
+    <string name="lang_en">English</string>
+    <string name="lang_tr">Türkçe</string>
 </resources>

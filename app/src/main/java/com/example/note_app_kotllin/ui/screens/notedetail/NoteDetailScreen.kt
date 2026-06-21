@@ -45,11 +45,8 @@ fun NoteDetailScreen(
     id: String = "id",
     title: String = "title",
     subtitle: String = "Subtitle",
-
-    viewModel: NoteDetailViewModel = hiltViewModel()  ,
     navController: NavHostController = rememberNavController(),
-
-
+    viewModel: NoteDetailViewModel = hiltViewModel()
     ) {
     var titleTextInput by remember { mutableStateOf(title) }
     var subtitleTextInput by remember { mutableStateOf(subtitle) }
