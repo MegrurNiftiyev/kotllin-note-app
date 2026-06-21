@@ -1,0 +1,4 @@
+<resources>
+    <string name="notes_empty_state_msg">This page is empty. Add your first note!</string>
+    <string name="cd_add_note">Add new note</string>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="placeholder_title">Başlıq</string>
+    <string name="cd_back">Əvvəlki səhifəyə geri qayıt</string>
+    <string name="cd_share_note">Bu notu paylaş</string>
+
+    <string name="dialog_delete_title">Not silinsin?</string>
+    <string name="dialog_delete_message">Bu notu silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.</string>
+    <string name="cd_delete_note">Notu sil</string>
+</resources>

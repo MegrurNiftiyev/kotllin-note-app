@@ -1,0 +1,14 @@
+
+
+
+<resources>
+    <string name="login_title">Hesaba Giriş</string>
+    <string name="login_btn">Giriş et</string>
+    <string name="placeholder_email">E-poçt ünvanı</string>
+    <string name="placeholder_password">Şifrə</string>
+    <string name="error_invalid_email">E-poçt formatı düzgün deyil</string>
+
+    <string name="register_title">Qeydiyyatdan Keç</string>
+    <string name="register_btn">Hesab yarat</string>
+    <string name="placeholder_confirm_password">Şifrəni təkrarla</string>
+</resources>

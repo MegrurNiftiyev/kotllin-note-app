@@ -1,0 +1,4 @@
+<resources>
+    <string name="notes_empty_state_msg">Sayfa boş. İlk notunuzu ekleyin!</string>
+    <string name="cd_add_note">Yeni not ekle</string>
+</resources>

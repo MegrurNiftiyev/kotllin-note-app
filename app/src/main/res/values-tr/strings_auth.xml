@@ -1,0 +1,11 @@
+<resources>
+    <string name="login_title">Hesaba Giriş</string>
+    <string name="login_btn">Giriş yap</string>
+    <string name="placeholder_email">E-posta adresi</string>
+    <string name="placeholder_password">Şifre</string>
+    <string name="error_invalid_email">E-posta biçimi geçerli değil</string>
+
+    <string name="register_title">Kayıt Ol</string>
+    <string name="register_btn">Hesap oluştur</string>
+    <string name="placeholder_confirm_password">Şifreyi tekrar gir</string>
+</resources>

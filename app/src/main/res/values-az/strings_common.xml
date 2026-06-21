@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Note App</string>
+    <string name="action_yes">Bəli</string>
+    <string name="action_no">Xeyr</string>
+    <string name="action_cancel">İmtina et</string>
+    <string name="action_confirm">Təsdiqlə</string>
+</resources>

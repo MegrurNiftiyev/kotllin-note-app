@@ -1,0 +1,11 @@
+<resources>
+    <string name="login_title">Sign In</string>
+    <string name="login_btn">Sign in</string>
+    <string name="placeholder_email">Email address</string>
+    <string name="placeholder_password">Password</string>
+    <string name="error_invalid_email">Invalid email format</string>
+
+    <string name="register_title">Register</string>
+    <string name="register_btn">Create account</string>
+    <string name="placeholder_confirm_password">Confirm password</string>
+</resources>
