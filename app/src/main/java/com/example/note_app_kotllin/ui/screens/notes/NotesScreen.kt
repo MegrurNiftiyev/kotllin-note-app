@@ -11,10 +11,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,7 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.note_app_kotllin.R
 import com.example.note_app_kotllin.ui.screens.notes.components.NoteCard
@@ -34,29 +36,48 @@ import com.example.note_app_kotllin.ui.screens.notes.components.NoteCard
 //@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun NotesScreen(
-    viewModel: NotesViewModel = viewModel(),
+    viewModel: NotesViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
-    Scaffold(topBar = {
-        Column {
-            TopAppBar(
-                title = {
-                    Text(stringResource(R.string.app_name))
-                },
-            )
-            HorizontalDivider(
-                thickness = 1.dp, color = MaterialTheme.colorScheme.primary
-            )
-        }
-    }, modifier = Modifier.fillMaxSize(), floatingActionButton = {
-        FloatingActionButton(
-            onClick = {
-                viewModel.addNote(title = "test", "test")
-            }) {
-            Icon(Icons.Default.Add, contentDescription = null)
+    Scaffold(
+        topBar = {
+            Column {
+                TopAppBar(
+                    title = {
+                        Text(stringResource(R.string.app_name))
+                    },
+                    actions = {
+                        IconButton(
+                            onClick = {
+                                navController.navigate("settings")
+                            }
+                        ) {
+                            Icon(
+                                Icons.Default.Settings,
+                                contentDescription = stringResource(id = R.string.settings_title)
+                            )
+                        }
 
+                    }
+                )
+                HorizontalDivider(
+                    thickness = 1.dp, color = MaterialTheme.colorScheme.primary
+                )
+
+            }
+
+        },
+
+
+        modifier = Modifier.fillMaxSize(), floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    viewModel.addNote(title = "test", "test")
+                }) {
+                Icon(Icons.Default.Add, contentDescription = null)
+
+            }
         }
-    }
     ) { innerPadding ->
 
         if (viewModel.notesList.isEmpty()) {
@@ -70,7 +91,7 @@ fun NotesScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(viewModel.notesList) { pair ->
-                    NoteCard (
+                    NoteCard(
                         title = pair.title,
                         subtitle = pair.subtitle,
                         onClick = {

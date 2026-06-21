@@ -3,8 +3,12 @@ package com.example.note_app_kotllin.ui.screens.notes
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.example.note_app_kotllin.data.models.Note
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class NotesViewModel : ViewModel() {
+
+@HiltViewModel
+class NotesViewModel @Inject constructor() : ViewModel() {
     val notesList = mutableStateListOf<Note>(
         Note(title = "Shopping List", subtitle = "Buy milk, bread, eggs, and butter from the local grocery store."),
         Note(title = "University Tasks", subtitle = "Review the layers of the OSI model for the Informatics exam."),

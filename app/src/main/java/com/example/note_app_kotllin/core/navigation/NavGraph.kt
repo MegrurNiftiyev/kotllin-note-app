@@ -27,7 +27,7 @@ fun NoteAppNavGraph(
             val subtitle = backStackEntry.arguments?.getString("subtitle") ?: ""
             NoteDetailScreen(id, title, subtitle, navController)
         }
-        composable(Screens.Notes.route) {
+        composable(Screens.Settings.route) {
             SettingsScreen(navController = navController)
         }
     }
