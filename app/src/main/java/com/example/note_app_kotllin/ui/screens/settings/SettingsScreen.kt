@@ -38,10 +38,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.note_app_kotllin.R
 import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
+import com.example.note_app_kotllin.core.enums.LanguageCodes
 import com.example.note_app_kotllin.core.extensions.getCurrentLanguage
-import com.example.note_app_kotllin.ui.components.ChangeLanguageBottomSheet
-import com.example.note_app_kotllin.ui.globalviewmodels.ThemeViewModel
-
+import com.example.note_app_kotllin.ui.components.LanguageBottomSheet
+import com.example.note_app_kotllin.ui.screens.settings.components.SettingTile
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,85 +54,53 @@ fun SettingsScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
     val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.settings_title)) },
                 navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            navController.popBackStack()
-                        }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.cd_back)
                         )
                     }
-                })
-        }) { innerPadding ->
+                }
+            )
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(scrollState)
                 .fillMaxSize()
-
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Paddings.MediumPlus)
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(BorderRadiuses.Medium)
-                    ).clickable {
-                        viewModel.openLanguageSheet()
-                    }
-                    .padding(Paddings.ExtraLarge)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(stringResource(R.string.settings_language))
-                    Text(context.getCurrentLanguage)
-                }
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Paddings.MediumPlus, vertical = Paddings.Small)
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(BorderRadiuses.Medium)
+            SettingTile(
+                title = stringResource(R.string.settings_language),
+                onClick = { viewModel.openLanguageSheet() },
+                trailingContent = {
+                    Text(
+                        text = context.getCurrentLanguage,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary
                     )
-                    .clickable {
-                        viewModel.changeThemeMode()
-                    }
-                    .padding(horizontal = Paddings.ExtraLarge, vertical = Paddings.Medium)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = stringResource(R.string.settings_dark_mode))
+                }
+            )
 
+            SettingTile(
+                title = stringResource(R.string.settings_dark_mode),
+                trailingContent = {
                     Switch(
                         checked = state.isDarkMode,
-                        onCheckedChange = {
-                            viewModel.changeThemeMode()
-                        }
+                        onCheckedChange = { viewModel.changeThemeMode() }
                     )
                 }
-            }
+            )
 
             if (state.isLanguageSheetOpen) {
-                ChangeLanguageBottomSheet(
-                    onDismissRequest = {
-                        viewModel.closeLanguageSheet()
-                    }
+                LanguageBottomSheet(
+                    onDismissRequest = { viewModel.closeLanguageSheet() }
                 )
             }
         }

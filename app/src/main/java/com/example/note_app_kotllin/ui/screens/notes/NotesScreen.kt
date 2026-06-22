@@ -22,13 +22,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.note_app_kotllin.R
+import com.example.note_app_kotllin.core.navigation.NoteDetail
+import com.example.note_app_kotllin.core.navigation.Settings
 import com.example.note_app_kotllin.ui.screens.notes.components.NoteCard
 
 
@@ -36,9 +40,11 @@ import com.example.note_app_kotllin.ui.screens.notes.components.NoteCard
 //@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun NotesScreen(
-    viewModel: NotesViewModel = hiltViewModel(),
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: NotesViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     Scaffold(
         topBar = {
             Column {
@@ -49,7 +55,7 @@ fun NotesScreen(
                     actions = {
                         IconButton(
                             onClick = {
-                                navController.navigate("settings")
+                                navController.navigate(Settings)
                             }
                         ) {
                             Icon(
@@ -80,7 +86,7 @@ fun NotesScreen(
         }
     ) { innerPadding ->
 
-        if (viewModel.notesList.isEmpty()) {
+        if (state.notes.isEmpty()) {
             EmptyState()
         } else {
             LazyColumn(
@@ -90,12 +96,12 @@ fun NotesScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(viewModel.notesList) { pair ->
+                items(state.notes) { pair ->
                     NoteCard(
                         title = pair.title,
                         subtitle = pair.subtitle,
                         onClick = {
-                            navController.navigate("note_detail/${pair.id}/${pair.title}/${pair.subtitle}")
+                            navController.navigate(NoteDetail(pair.id, pair.title, pair.subtitle))
                         }
                     )
                 }
