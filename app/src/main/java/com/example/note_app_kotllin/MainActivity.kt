@@ -19,10 +19,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val themeViewModel: ThemeViewModel = hiltViewModel()
-            val isDarkMode by themeViewModel.isDarkMode.collectAsStateWithLifecycle()
+//            val themeViewModel: ThemeViewModel = hiltViewModel()
+//            val isDarkMode by themeViewModel.isDarkMode.collectAsStateWithLifecycle()
 
-            NoteappkotllinTheme(darkTheme = isDarkMode) {
+            NoteappkotllinTheme() {
                 NoteAppNavGraph( )
             }
         }
