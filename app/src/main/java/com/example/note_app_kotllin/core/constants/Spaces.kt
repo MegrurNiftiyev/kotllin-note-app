@@ -2,7 +2,7 @@ package com.example.note_app_kotllin.core.constants
 
 import androidx.compose.ui.unit.dp
 
-object  BorderRadiuses {
+object Spaces {
     val ExtraMini = 4.dp
     val Mini = 6.dp
     val Tiny = 8.dp

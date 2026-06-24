@@ -25,6 +25,7 @@ class CacheManager @Inject constructor(
     private val Context.dataStore: DataStore<Preferences>
             by preferencesDataStore(name = CacheKeys.APP_CACHE)
 
+
     fun getBoolean(key: String, default: Boolean = false): Flow<Boolean> =
         context.dataStore.data.map { it[booleanPreferencesKey(key)] ?: default }
 

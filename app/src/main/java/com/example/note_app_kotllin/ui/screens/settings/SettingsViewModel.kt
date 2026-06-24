@@ -21,6 +21,7 @@ class SettingsViewModel @Inject constructor(
     private val _state = MutableStateFlow(SettingsState())
     val state: StateFlow<SettingsState> = _state.asStateFlow()
 
+
     init {
         viewModelScope.launch {
             settingsRepository.isDarkMode.collect { darkMode ->
@@ -35,6 +36,7 @@ class SettingsViewModel @Inject constructor(
             settingsRepository.changeTheme(!currentMode)
         }
     }
+
     fun openLanguageSheet() {
         _state.update { it.copy(isLanguageSheetOpen = true) }
     }

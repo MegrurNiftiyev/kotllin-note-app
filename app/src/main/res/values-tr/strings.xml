@@ -7,6 +7,23 @@
     <!-- ===== Notes ===== -->
     <string name="notes_empty_state">Henüz not yok. Eklemek için + butonuna basın.</string>
 
+    <!-- ===== Auth ===== -->
+    <string name="welcome">Not Uygulamasına Hoş Geldiniz</string>
+    <string name="welcome_back">Not Uygulamasına \n Tekrar Hoş Geldiniz</string>
+    <string name="username">Kullanıcı adı</string>
+    <string name="enter_username">Kullanıcı adınızı girin</string>
+    <string name="email">E-posta</string>
+    <string name="enter_email">E-postanızı girin</string>
+    <string name="password">Şifre</string>
+    <string name="enter_password">Şifrenizi girin</string>
+    <string name="confirm_password">Şifreyi onayla</string>
+    <string name="repeat_password">Şifrenizi tekrar girin</string>
+    <string name="login">Giriş Yap</string>
+    <string name="register">Kayıt Ol</string>
+    <string name="dont_have_account">Hesabınız yok mu? </string>
+    <string name="already_have_account">Zaten bir hesabınız var mı? </string>
+    <string name="login_lowercase">giriş yap</string>
+
     <!-- ===== Note Detail ===== -->
     <string name="cd_delete">Notu sil</string>
     <string name="cd_share">Notu paylaş</string>

@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.note_app_kotllin.core.navigation.NoteAppNavGraph
 import com.example.note_app_kotllin.core.theme.NoteappkotllinTheme
-import com.example.note_app_kotllin.ui.globalviewmodels.ThemeViewModel
+import com.example.note_app_kotllin.ui.screens.settings.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -19,10 +19,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-//            val themeViewModel: ThemeViewModel = hiltViewModel()
-//            val isDarkMode by themeViewModel.isDarkMode.collectAsStateWithLifecycle()
+            val settingsViewModel: SettingsViewModel = hiltViewModel()
+            val settingsState by settingsViewModel.state.collectAsStateWithLifecycle()
 
-            NoteappkotllinTheme() {
+            NoteappkotllinTheme(darkTheme = settingsState.isDarkMode, dynamicColor = false) {
                 NoteAppNavGraph( )
             }
         }

@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
 
 @Composable
@@ -31,7 +32,7 @@ fun CustomTextField(
     ) {
         Text(
             text = label,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = Paddings.Tiny)
         )
@@ -48,7 +49,7 @@ fun CustomTextField(
                 )
             },
             isError = isError,
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(BorderRadiuses.LargePlus),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.surface,
                 unfocusedContainerColor = MaterialTheme.colorScheme.surface,

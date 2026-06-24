@@ -4,6 +4,23 @@
     <string name="app_name">Qeyd Tətbiqi</string>
     <string name="cd_back">Geri</string>
 
+    <!-- ===== Auth ===== -->
+    <string name="welcome">Note Tətbiqinə Xoş Gəlmisiniz</string>
+    <string name="welcome_back">Note Tətbiqinə \n Yenidən Xoş Gəlmisiniz</string>
+    <string name="username">İstifadəçi adı</string>
+    <string name="enter_username">İstifadəçi adınızı daxil edin</string>
+    <string name="email">Email</string>
+    <string name="enter_email">Emailinizi daxil edin</string>
+    <string name="password">Şifrə</string>
+    <string name="enter_password">Şifrənizi daxil edin</string>
+    <string name="confirm_password">Şifrəni təsdiqləyin</string>
+    <string name="repeat_password">Şifrənizi təkrar daxil edin</string>
+    <string name="login">Giriş</string>
+    <string name="register">Qeydiyyat</string>
+    <string name="dont_have_account">Hesabınız yoxdur? </string>
+    <string name="already_have_account">Artıq hesabınız var? </string>
+    <string name="login_lowercase">giriş</string>
+
     <!-- ===== Notes ===== -->
     <string name="notes_empty_state">Hələlik qeyd yoxdur. Əlavə etmək üçün + düyməsinə basın.</string>
 

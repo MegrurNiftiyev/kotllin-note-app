@@ -1,6 +1,7 @@
 package com.example.note_app_kotllin.ui.screens.auth.login
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,18 +18,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.note_app_kotllin.R
 import com.example.note_app_kotllin.core.constants.Paddings
-import com.example.note_app_kotllin.core.navigation.Login
 import com.example.note_app_kotllin.core.navigation.Notes
 import com.example.note_app_kotllin.core.navigation.Register
 import com.example.note_app_kotllin.ui.screens.auth.components.CustomTextField
 import com.example.note_app_kotllin.ui.screens.auth.components.RichText
-import com.example.note_app_kotllin.ui.screens.auth.register.RegisterScreen
 import com.example.note_app_kotllin.ui.screens.auth.register.RegisterViewModel
 
 @Composable
@@ -38,17 +40,22 @@ fun LoginScreen(
 ) {
     var emailTextInput by remember { mutableStateOf("") }
     var passwordTextInput by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
                 .background(color = MaterialTheme.colorScheme.background)
-                .padding(innerPadding)
+                .padding(innerPadding).pointerInput(Unit){
+                    detectTapGestures(onTap = {
+                        focusManager.clearFocus()
+                    })
+                }
         ) {
             Spacer(modifier = Modifier.height(70.dp))
 
             Text(
-                text = "Welcome Back to \n Note App",
+                text = stringResource(R.string.welcome_back),
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(Paddings.Medium)
             )
@@ -64,26 +71,29 @@ fun LoginScreen(
                 CustomTextField(
                     value = emailTextInput,
                     onValueChange = { emailTextInput = it },
-                    label = "Email",
-                    placeholder = "Enter your email"
+                    label = stringResource(R.string.email),
+                    placeholder = stringResource(R.string.enter_email)
                 )
                 CustomTextField(
                     value = passwordTextInput,
                     onValueChange = { passwordTextInput = it },
-                    label = "Password",
-                    placeholder = "Enter your password"
+                    label = stringResource(R.string.password),
+                    placeholder = stringResource(R.string.enter_password)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
                 OutlinedButton(
-                    modifier = Modifier.fillMaxWidth(), onClick = {   navController.navigate(Notes) }
+                    modifier = Modifier.fillMaxWidth().padding(Paddings.Tiny),
+                    onClick = {   navController.navigate(Notes) }
                 )
                 {
-                    Text(text = "Log in", style = MaterialTheme.typography.bodyLarge)
+                    Text(text = stringResource(R.string.login), style = MaterialTheme.typography.bodyLarge)
                 }
+                Spacer(modifier = Modifier.height(20.dp))
+
                 RichText(
-                    startText = "Don't have an account? ",
-                    clickableText = "Register",
+                    startText = stringResource(R.string.dont_have_account),
+                    clickableText = stringResource(R.string.register),
                     onLinkClicked = { navController.navigate(Register) },
                     modifier = Modifier.align(Alignment.CenterHorizontally).padding(Paddings.Tiny)
                 )

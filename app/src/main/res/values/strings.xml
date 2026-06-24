@@ -3,6 +3,23 @@
     <string name="app_name">Note App</string>
     <string name="cd_back">Back</string>
 
+    <!-- ===== Auth ===== -->
+    <string name="welcome">Welcome to Note App</string>
+    <string name="welcome_back">Welcome Back to \n Note App</string>
+    <string name="username">User Name</string>
+    <string name="enter_username">Enter your username</string>
+    <string name="email">Email</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="repeat_password">Repeat your password</string>
+    <string name="login">Log in</string>
+    <string name="register">Register</string>
+    <string name="dont_have_account">Don\'t have an account? </string>
+    <string name="already_have_account">Already have an account? </string>
+    <string name="login_lowercase">log in</string>
+
     <!-- ===== Notes ===== -->
     <string name="notes_empty_state">No notes yet. Click the + button to add one.</string>
 

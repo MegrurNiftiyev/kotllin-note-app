@@ -1,6 +1,7 @@
 package com.example.note_app_kotllin.ui.screens.notes
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -77,9 +78,13 @@ fun NotesScreen(
 
         modifier = Modifier.fillMaxSize(), floatingActionButton = {
             FloatingActionButton(
+
+                modifier = Modifier.background(color = MaterialTheme.colorScheme.primary),
                 onClick = {
                     viewModel.addNote(title = "test", "test")
-                }) {
+                }
+
+            ) {
                 Icon(Icons.Default.Add, contentDescription = null)
 
             }
