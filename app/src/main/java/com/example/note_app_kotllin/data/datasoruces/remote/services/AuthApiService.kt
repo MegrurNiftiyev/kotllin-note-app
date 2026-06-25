@@ -31,6 +31,6 @@ interface AuthApiService {
 
     @Headers("X-Client-Type: mobile")
     @POST("/api/auth/logout")
-    suspend fun logout(@Body logoutRequest: LogoutRequest): retrofit2.Response<Unit>
+    suspend fun logout(@Body logoutRequest: LogoutRequest): Unit
 
 }

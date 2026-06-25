@@ -80,7 +80,7 @@ fun RegisterScreen(
             SnackbarHost(snackBarHostState) { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = if (state.isSuccess) MaterialTheme.colorScheme.primaryContainer
+                    containerColor = if (state.isSuccess) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.errorContainer,
                     contentColor = if (state.isSuccess) MaterialTheme.colorScheme.onPrimaryContainer
                     else MaterialTheme.colorScheme.onErrorContainer,

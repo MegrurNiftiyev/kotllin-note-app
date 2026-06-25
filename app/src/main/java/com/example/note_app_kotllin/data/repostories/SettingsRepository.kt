@@ -11,6 +11,7 @@ class SettingsRepository @Inject constructor(
     private val localDataSource: SettingsLocalDataSource
 ) : ISettingsRepository {
     override val isDarkMode: Flow<Boolean>
+
         get() {
             return localDataSource.isDarkMode
         }

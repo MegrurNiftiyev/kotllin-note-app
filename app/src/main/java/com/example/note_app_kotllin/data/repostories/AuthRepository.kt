@@ -21,8 +21,14 @@ class AuthRepository @Inject constructor(
     override suspend fun register(userName: String, email: String, password: String): Result<User> {
         return try {
             val response = remoteDataSource.register(userName, email, password)
-            encryptedCacheManager.saveSecureString(CacheKeys.ACCESS_TOKEN, response.data.accessToken)
-            encryptedCacheManager.saveSecureString(CacheKeys.REFRESH_TOKEN, response.data.refreshToken)
+            encryptedCacheManager.saveSecureString(
+                CacheKeys.ACCESS_TOKEN, response.data.accessToken
+            )
+            encryptedCacheManager.saveSecureString(
+                CacheKeys.REFRESH_TOKEN, response.data.refreshToken
+            )
+            android.util.Log.e("REGISTER", response.data.toString())
+
             Result.success(response.data.user.toDomainUser())
         } catch (e: AuthException) {
             Result.failure(e)
@@ -32,15 +38,42 @@ class AuthRepository @Inject constructor(
     }
 
     override suspend fun login(
-        email: String,
-        password: String
+        email: String, password: String
     ): Result<User> {
-        TODO("Not yet implemented")
+        return try {
+            val response = remoteDataSource.login(email, password)
+            encryptedCacheManager.saveSecureString(
+                CacheKeys.ACCESS_TOKEN, response.data.accessToken
+            )
+            encryptedCacheManager.saveSecureString(
+                CacheKeys.REFRESH_TOKEN, response.data.refreshToken
+            )
+            android.util.Log.e("LOGIN", response.data.toString())
+
+            Result.success(response.data.user.toDomainUser())
+
+        } catch (e: AuthException) {
+            Result.failure(e)
+        } catch (e: NetworkException) {
+            Result.failure(e)
+        }
     }
 
     override suspend fun logout(): Result<Unit> {
-        TODO("Not yet implemented")
+        return try {
+            val refreshToken = encryptedCacheManager.getSecureString(
+                CacheKeys.REFRESH_TOKEN,
+            )
+            if (refreshToken == null) return Result.failure(AuthException.TokenNotFound())
+            remoteDataSource.logout(refreshToken)
+            encryptedCacheManager.clearAllCache()
+            Result.success(Unit)
+        } catch (e: AuthException) {
+            Result.failure(e)
+        } catch (e: NetworkException) {
+            Result.failure(e)
+        }
     }
-
-
 }
+
+

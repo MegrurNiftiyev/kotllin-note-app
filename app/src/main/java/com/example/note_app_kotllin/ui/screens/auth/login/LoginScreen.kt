@@ -10,8 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,7 +44,11 @@ fun LoginScreen(
     var emailTextInput by remember { mutableStateOf("") }
     var passwordTextInput by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+val state by viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    LaunchedEffect(state.errorMessage) {
 
+    }
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -72,13 +79,16 @@ fun LoginScreen(
                     value = emailTextInput,
                     onValueChange = { emailTextInput = it },
                     label = stringResource(R.string.email),
-                    placeholder = stringResource(R.string.enter_email)
+                    placeholder = stringResource(R.string.enter_email),
+                    errorMessage = state.emailError
+
                 )
                 CustomTextField(
                     value = passwordTextInput,
                     onValueChange = { passwordTextInput = it },
                     label = stringResource(R.string.password),
-                    placeholder = stringResource(R.string.enter_password)
+                    placeholder = stringResource(R.string.enter_password),
+                    errorMessage = state.passwordError
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
