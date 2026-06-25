@@ -7,11 +7,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,14 +30,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.note_app_kotllin.R
+import com.example.note_app_kotllin.core.constants.AppDurations
+import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
 import com.example.note_app_kotllin.core.navigation.Login
 import com.example.note_app_kotllin.core.navigation.Notes
+import com.example.note_app_kotllin.core.navigation.Register
 import com.example.note_app_kotllin.ui.screens.auth.components.CustomTextField
 import com.example.note_app_kotllin.ui.screens.auth.components.RichText
+import kotlinx.coroutines.delay
 
 @Preview
 @Composable
@@ -39,22 +50,53 @@ fun RegisterScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
-    var userNameTextInput by remember { mutableStateOf("") }
-    var emailTextInput by remember { mutableStateOf("") }
-    var passwordTextInput by remember { mutableStateOf("") }
-    var confirmPasswordTextInput by remember { mutableStateOf("") }
+    var userNameTextInput by remember { mutableStateOf("testuser") }
+    var emailTextInput by remember { mutableStateOf("test@gmail.com") }
+    var passwordTextInput by remember { mutableStateOf("Test@1234") }
+    var confirmPasswordTextInput by remember { mutableStateOf("Test@1234") }
     val focusManager = LocalFocusManager.current
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackBarHostState = remember { SnackbarHostState() }
 
-    Scaffold { innerPadding ->
+    LaunchedEffect(state.errorMessage) {
+        state.errorMessage?.let {
+            snackBarHostState.showSnackbar(it)
+        }
+    }
+    LaunchedEffect(state.isSuccess) {
+        if (state.isSuccess) state.isSuccess.let {
+            snackBarHostState.showSnackbar("Qeydiyyat ugurlu oldu")
+            delay(AppDurations.MediumPlus)
+            navController.navigate(Notes) {
+                popUpTo(Register) {
+                    inclusive = true
+                }
+            }
+        }
+    }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackBarHostState) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    containerColor = if (state.isSuccess) MaterialTheme.colorScheme.primaryContainer
+                    else MaterialTheme.colorScheme.errorContainer,
+                    contentColor = if (state.isSuccess) MaterialTheme.colorScheme.onPrimaryContainer
+                    else MaterialTheme.colorScheme.onErrorContainer,
+                    shape = RoundedCornerShape(BorderRadiuses.Medium)
+                )
+            }
+        }) { innerPadding ->
         Column(
             modifier = Modifier
                 .background(color = MaterialTheme.colorScheme.background)
-                .padding(innerPadding).pointerInput(Unit){
+                .padding(innerPadding)
+                .pointerInput(Unit) {
                     detectTapGestures(onTap = {
                         focusManager.clearFocus()
                     })
-                }
-        ) {
+                }) {
             Spacer(modifier = Modifier.height(70.dp))
 
             Text(
@@ -74,33 +116,55 @@ fun RegisterScreen(
                     value = userNameTextInput,
                     onValueChange = { userNameTextInput = it },
                     label = stringResource(R.string.username),
-                    placeholder = stringResource(R.string.enter_username)
+                    placeholder = stringResource(R.string.enter_username),
+                    errorMessage = state.userNameError
                 )
                 CustomTextField(
                     value = emailTextInput,
                     onValueChange = { emailTextInput = it },
                     label = stringResource(R.string.email),
-                    placeholder = stringResource(R.string.enter_email)
+                    placeholder = stringResource(R.string.enter_email),
+                    errorMessage = state.emailError
+
                 )
                 CustomTextField(
                     value = passwordTextInput,
                     onValueChange = { passwordTextInput = it },
                     label = stringResource(R.string.password),
-                    placeholder = stringResource(R.string.enter_password)
+                    placeholder = stringResource(R.string.enter_password),
+                    errorMessage = state.passwordError
                 )
                 CustomTextField(
                     value = confirmPasswordTextInput,
                     onValueChange = { confirmPasswordTextInput = it },
                     label = stringResource(R.string.confirm_password),
-                    placeholder = stringResource(R.string.repeat_password)
+                    placeholder = stringResource(R.string.repeat_password),
+
+                    errorMessage = state.confirmPasswordError
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 OutlinedButton(
-                    modifier = Modifier.fillMaxWidth().padding(Paddings.Tiny),
-                    onClick = {   navController.navigate(Notes) }
-                )
-                {
-                    Text(text = stringResource(R.string.register), style = MaterialTheme.typography.bodyLarge)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Paddings.SmallMinus), onClick = {
+
+                        viewModel.register(
+                            userNameTextInput,
+                            emailTextInput,
+                            passwordTextInput,
+                            confirmPasswordTextInput
+                        )
+
+                    }) {
+                    if (state.isLoading) {
+                        CircularProgressIndicator()
+                    } else {
+                        Text(
+                            text = stringResource(R.string.register),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+
                 }
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -108,8 +172,12 @@ fun RegisterScreen(
                     startText = stringResource(R.string.already_have_account),
                     clickableText = stringResource(R.string.login_lowercase),
                     onLinkClicked = { navController.navigate(Login) },
-                    modifier = Modifier.align(Alignment.CenterHorizontally).padding(Paddings.Tiny)
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .height(40.dp)
                 )
+
+
             }
         }
     }

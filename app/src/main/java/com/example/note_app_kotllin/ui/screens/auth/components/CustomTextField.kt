@@ -22,9 +22,9 @@ fun CustomTextField(
     label: String,
     placeholder: String,
     modifier: Modifier = Modifier,
-    isError: Boolean = false,
     errorMessage: String? = null
 ) {
+    val isError= errorMessage!=null
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -62,7 +62,7 @@ fun CustomTextField(
             ),
             singleLine = true
         )
-        if (isError && errorMessage != null) {
+        if (isError) {
             Text(
                 text = errorMessage,
                 style = MaterialTheme.typography.bodyMedium,

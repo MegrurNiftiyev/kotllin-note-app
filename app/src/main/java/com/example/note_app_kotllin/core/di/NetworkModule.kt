@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class NetworkModule {
+object  NetworkModule {
 
     private val json = Json { ignoreUnknownKeys = true }
     private val contentType = "application/json".toMediaType()
@@ -42,7 +42,7 @@ abstract class NetworkModule {
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-            .authenticator(tokenAuthenticator)
+           // .authenticator(tokenAuthenticator)
             .build()
     }
 
