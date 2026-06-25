@@ -1,4 +1,4 @@
-package com.example.note_app_kotllin.data.datasoruces.remote.interceptors
+package com.example.note_app_kotllin.core.interceptors
 
 import okhttp3.Authenticator
 import okhttp3.Request

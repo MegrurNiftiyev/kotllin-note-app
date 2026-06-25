@@ -1,8 +1,8 @@
 package com.example.note_app_kotllin.core.di
 
 import com.example.note_app_kotllin.core.constants.ApiUrls
-import com.example.note_app_kotllin.data.datasoruces.remote.interceptors.AuthInterceptor
-import com.example.note_app_kotllin.data.datasoruces.remote.interceptors.TokenAuthenticator
+import com.example.note_app_kotllin.core.interceptors.AuthInterceptor
+import com.example.note_app_kotllin.core.interceptors.TokenAuthenticator
 import com.example.note_app_kotllin.data.datasoruces.remote.services.AuthApiService
 import com.example.note_app_kotllin.data.datasoruces.remote.services.NoteApiService
 import com.example.note_app_kotllin.data.datasoruces.remote.services.UserApiService

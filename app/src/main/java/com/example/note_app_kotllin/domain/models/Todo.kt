@@ -1,4 +1,4 @@
-package com.example.note_app_kotllin.data.models
+package com.example.note_app_kotllin.domain.models
 
 data class Todo(
     val id: String,

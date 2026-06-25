@@ -1,7 +1,6 @@
-package com.example.note_app_kotllin.data.repostories.interfaces
+package com.example.note_app_kotllin.domain.repositories
 
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Singleton
 
 interface ISettingsRepository {
 

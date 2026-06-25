@@ -1,6 +1,6 @@
-package com.example.note_app_kotllin.data.datasoruces.remote.models.dto
+package com.example.note_app_kotllin.data.models.dto
 
-import com.example.note_app_kotllin.data.models.User
+import com.example.note_app_kotllin.domain.models.User
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -1,7 +1,6 @@
 package com.example.note_app_kotllin.ui.screens.notes
 
-import androidx.compose.runtime.mutableStateListOf
-import com.example.note_app_kotllin.data.models.Note
+import com.example.note_app_kotllin.domain.models.Note
 
 data class NotesState(
     val notes: List<Note> = emptyList(),

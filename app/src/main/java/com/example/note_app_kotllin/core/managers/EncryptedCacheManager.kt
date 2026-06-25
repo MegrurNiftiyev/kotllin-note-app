@@ -3,11 +3,11 @@ package com.example.note_app_kotllin.core.managers
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import androidx.security.crypto.MasterKeys
 import com.example.note_app_kotllin.core.constants.CacheKeys
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import androidx.core.content.edit
 
 
 @Singleton
@@ -28,7 +28,7 @@ class EncryptedCacheManager @Inject constructor(
     )
 
     fun saveSecureString(key: String, value: String) {
-        encryptedPrefs.edit().putString(key, value).apply()
+        encryptedPrefs.edit { putString(key, value) }
     }
 
     fun getSecureString(key: String, default: String? = null): String? {
@@ -36,11 +36,11 @@ class EncryptedCacheManager @Inject constructor(
     }
 
     fun removeSecureKey(key: String) {
-        encryptedPrefs.edit().remove(key).apply()
+        encryptedPrefs.edit { remove(key) }
     }
 
 
     suspend fun clearAllCache() {
-        encryptedPrefs.edit().clear().apply()
+        encryptedPrefs.edit { clear() }
     }
 }

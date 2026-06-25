@@ -1,14 +1,14 @@
 package com.example.note_app_kotllin.data.repostories
 
-import com.example.note_app_kotllin.data.datasoruces.local.interfaces.ISettingsLocalDataSource
-import com.example.note_app_kotllin.data.repostories.interfaces.ISettingsRepository
+import com.example.note_app_kotllin.data.datasoruces.local.SettingsLocalDataSource
+import com.example.note_app_kotllin.domain.repositories.ISettingsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SettingsRepository @Inject constructor(
-    private val localDataSource: ISettingsLocalDataSource
+    private val localDataSource: SettingsLocalDataSource
 ) : ISettingsRepository {
     override val isDarkMode: Flow<Boolean>
         get() {

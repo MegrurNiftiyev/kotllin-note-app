@@ -1,4 +1,4 @@
-package com.example.note_app_kotllin.data.datasoruces.remote.interceptors
+package com.example.note_app_kotllin.core.interceptors
 
 import com.example.note_app_kotllin.core.constants.CacheKeys
 import com.example.note_app_kotllin.core.managers.EncryptedCacheManager

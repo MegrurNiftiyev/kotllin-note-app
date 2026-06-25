@@ -2,8 +2,7 @@ package com.example.note_app_kotllin.ui.screens.notes
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import com.example.note_app_kotllin.data.models.Note
-import com.example.note_app_kotllin.ui.screens.settings.SettingsState
+import com.example.note_app_kotllin.domain.models.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

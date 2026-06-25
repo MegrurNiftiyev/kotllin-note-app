@@ -1,12 +1,12 @@
 package com.example.note_app_kotllin.data.datasoruces.remote.services
 
-import com.example.note_app_kotllin.data.datasoruces.remote.models.request.LoginRequest
-import com.example.note_app_kotllin.data.datasoruces.remote.models.request.LogoutRequest
-import com.example.note_app_kotllin.data.datasoruces.remote.models.request.RefreshRequest
-import com.example.note_app_kotllin.data.datasoruces.remote.models.request.RegisterRequest
-import com.example.note_app_kotllin.data.datasoruces.remote.models.response.LoginResponse
-import com.example.note_app_kotllin.data.datasoruces.remote.models.response.RefreshResponse
-import com.example.note_app_kotllin.data.datasoruces.remote.models.response.RegisterResponse
+import com.example.note_app_kotllin.data.models.request.LoginRequest
+import com.example.note_app_kotllin.data.models.request.LogoutRequest
+import com.example.note_app_kotllin.data.models.request.RefreshRequest
+import com.example.note_app_kotllin.data.models.request.RegisterRequest
+import com.example.note_app_kotllin.data.models.response.LoginResponse
+import com.example.note_app_kotllin.data.models.response.RefreshResponse
+import com.example.note_app_kotllin.data.models.response.RegisterResponse
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST

@@ -1,9 +1,9 @@
-package com.example.note_app_kotllin.data.models
+package com.example.note_app_kotllin.domain.models
 
-import android.icu.text.CaseMap
+import java.util.UUID
 
 data class Note(
-    val id: String=java.util.UUID.randomUUID().toString(),
+    val id: String= UUID.randomUUID().toString(),
     val title: String,
     val subtitle : String,
     val createdAt: Long = System.currentTimeMillis(),
