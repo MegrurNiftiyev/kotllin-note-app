@@ -3,6 +3,9 @@
     <!-- ===== General ===== -->
     <string name="app_name">Qeyd Tətbiqi</string>
     <string name="cd_back">Geri</string>
+    <string name="error_unknown">Xəta baş verdi</string>
+    <string name="error_no_internet">İnternet bağlantısı yoxdur</string>
+    <string name="error_too_many_requests">Çox sayda cəhd. Bir az gözləyin</string>
 
     <!-- ===== Auth ===== -->
     <string name="welcome">Note Tətbiqinə Xoş Gəlmisiniz</string>
@@ -20,6 +23,20 @@
     <string name="dont_have_account">Hesabınız yoxdur? </string>
     <string name="already_have_account">Artıq hesabınız var? </string>
     <string name="login_lowercase">giriş</string>
+    <string name="login_success">Giriş uğurludur</string>
+    <string name="register_success">Qeydiyyat uğurludur</string>
+
+    <!-- ===== Auth Validation Errors ===== -->
+    <string name="error_invalid_credentials">Şifrə və ya email yanlışdır</string>
+    <string name="error_email_exists">Bu email artıq qeydiyyatdan keçib</string>
+    <string name="error_empty_username">İstifadəçi adı boş ola bilməz</string>
+    <string name="error_invalid_username">Ən az 3 simvol, yalnız hərf, rəqəm, nöqtə və tire</string>
+    <string name="error_empty_email">Email boş ola bilməz</string>
+    <string name="error_invalid_email">Düzgün email daxil edin</string>
+    <string name="error_empty_password">Şifrə boş ola bilməz</string>
+    <string name="error_invalid_password">Ən az 8 simvol, böyük/kiçik hərf, rəqəm və xüsusi işarə</string>
+    <string name="error_empty_confirm_password">Şifrəni təkrar daxil edin</string>
+    <string name="error_passwords_not_match">Şifrələr uyğun gəlmir</string>
 
     <!-- ===== Notes ===== -->
     <string name="notes_empty_state">Hələlik qeyd yoxdur. Əlavə etmək üçün + düyməsinə basın.</string>

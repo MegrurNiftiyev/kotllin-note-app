@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,15 +58,17 @@ fun RegisterScreen(
     val focusManager = LocalFocusManager.current
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+    val registerSuccessMessage = stringResource(R.string.register_success)
 
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let {
-            snackBarHostState.showSnackbar(it)
+            snackBarHostState.showSnackbar(it.asString(context))
         }
     }
     LaunchedEffect(state.isSuccess) {
-        if (state.isSuccess) state.isSuccess.let {
-            snackBarHostState.showSnackbar("Qeydiyyat ugurlu oldu")
+        if (state.isSuccess) {
+            snackBarHostState.showSnackbar(registerSuccessMessage)
             delay(AppDurations.MediumPlus)
             navController.navigate(Notes) {
                 popUpTo(Register) {

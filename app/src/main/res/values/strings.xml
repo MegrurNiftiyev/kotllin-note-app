@@ -2,6 +2,9 @@
     <!-- ===== General ===== -->
     <string name="app_name">Note App</string>
     <string name="cd_back">Back</string>
+    <string name="error_unknown">An error occurred</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_too_many_requests">Too many requests. Please wait.</string>
 
     <!-- ===== Auth ===== -->
     <string name="welcome">Welcome to Note App</string>
@@ -19,6 +22,20 @@
     <string name="dont_have_account">Don\'t have an account? </string>
     <string name="already_have_account">Already have an account? </string>
     <string name="login_lowercase">log in</string>
+    <string name="login_success">Login successful</string>
+    <string name="register_success">Registration successful</string>
+
+    <!-- ===== Auth Validation Errors ===== -->
+    <string name="error_invalid_credentials">Invalid email or password</string>
+    <string name="error_email_exists">This email is already registered</string>
+    <string name="error_empty_username">Username cannot be empty</string>
+    <string name="error_invalid_username">At least 3 characters, only letters, numbers, dots and dashes</string>
+    <string name="error_empty_email">Email cannot be empty</string>
+    <string name="error_invalid_email">Enter a valid email</string>
+    <string name="error_empty_password">Password cannot be empty</string>
+    <string name="error_invalid_password">At least 8 characters, upper/lower case, number and special character</string>
+    <string name="error_empty_confirm_password">Please re-enter your password</string>
+    <string name="error_passwords_not_match">Passwords do not match</string>
 
     <!-- ===== Notes ===== -->
     <string name="notes_empty_state">No notes yet. Click the + button to add one.</string>

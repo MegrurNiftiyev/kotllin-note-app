@@ -2,12 +2,13 @@ package com.example.note_app_kotllin.ui.screens.auth.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.note_app_kotllin.R
 import com.example.note_app_kotllin.core.exceptions.AuthException
 import com.example.note_app_kotllin.core.exceptions.NetworkException
 import com.example.note_app_kotllin.core.extensions.isValidEmail
 import com.example.note_app_kotllin.core.extensions.isValidPassword
 import com.example.note_app_kotllin.core.extensions.isValidUserName
+import com.example.note_app_kotllin.core.util.UiText
 import com.example.note_app_kotllin.domain.repositories.IAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,11 +22,11 @@ class RegisterViewModel @Inject constructor(
     private val authRepository: IAuthRepository
 ): ViewModel() {
 
-     private val _state = MutableStateFlow(RegisterState())
-    val state=_state.asStateFlow()
+    private val _state = MutableStateFlow(RegisterState())
+    val state = _state.asStateFlow()
 
     fun register(userName: String, email: String, password: String, confirmPassword: String) {
-        if (!validate(userName, email, password,confirmPassword)) return
+        if (!validate(userName, email, password, confirmPassword)) return
 
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, errorMessage = null) }
@@ -36,10 +37,10 @@ class RegisterViewModel @Inject constructor(
                 }
                 .onFailure { e ->
                     val error = when (e) {
-                        is AuthException.EmailAlreadyExists -> "Bu email artıq qeydiyyatdan keçib"
-                        is AuthException.TooManyRequests -> "Çox sayda cəhd. Bir az gözləyin"
-                        is NetworkException.NoInternet -> "İnternet bağlantısı yoxdur"
-                        else -> "Xəta baş verdi"
+                        is AuthException.EmailAlreadyExists -> UiText.StringResource(R.string.error_email_exists)
+                        is AuthException.TooManyRequests -> UiText.StringResource(R.string.error_too_many_requests)
+                        is NetworkException.NoInternet -> UiText.StringResource(R.string.error_no_internet)
+                        else -> UiText.StringResource(R.string.error_unknown)
                     }
                     _state.update { it.copy(isLoading = false, errorMessage = error) }
                 }
@@ -53,26 +54,26 @@ class RegisterViewModel @Inject constructor(
         confirmPassword: String
     ): Boolean {
         val userNameError = when {
-            userName.isBlank() -> "İstifadəçi adı boş ola bilməz"
-            !userName.isValidUserName() -> "Ən az 3 simvol, yalnız hərf, rəqəm, nöqtə və tire"
+            userName.isBlank() -> UiText.StringResource(R.string.error_empty_username)
+            !userName.isValidUserName() -> UiText.StringResource(R.string.error_invalid_username)
             else -> null
         }
 
         val emailError = when {
-            email.isBlank() -> "Email boş ola bilməz"
-            !email.isValidEmail() -> "Düzgün email daxil edin"
+            email.isBlank() -> UiText.StringResource(R.string.error_empty_email)
+            !email.isValidEmail() -> UiText.StringResource(R.string.error_invalid_email)
             else -> null
         }
 
         val passwordError = when {
-            password.isBlank() -> "Şifrə boş ola bilməz"
-            !password.isValidPassword() -> "Ən az 8 simvol, böyük/kiçik hərf, rəqəm və xüsusi işarə"
+            password.isBlank() -> UiText.StringResource(R.string.error_empty_password)
+            !password.isValidPassword() -> UiText.StringResource(R.string.error_invalid_password)
             else -> null
         }
 
         val confirmPasswordError = when {
-            confirmPassword.isBlank() -> "Şifrəni təkrar daxil edin"
-            confirmPassword != password -> "Şifrələr uyğun gəlmir"
+            confirmPassword.isBlank() -> UiText.StringResource(R.string.error_empty_confirm_password)
+            confirmPassword != password -> UiText.StringResource(R.string.error_passwords_not_match)
             else -> null
         }
 

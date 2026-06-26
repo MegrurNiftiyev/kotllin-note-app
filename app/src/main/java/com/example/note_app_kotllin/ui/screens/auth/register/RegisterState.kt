@@ -1,11 +1,13 @@
 package com.example.note_app_kotllin.ui.screens.auth.register
 
+import com.example.note_app_kotllin.core.util.UiText
+
 data class RegisterState (
-    val isLoading: Boolean=false,
-    val isSuccess:Boolean=false,
-    val errorMessage: String? = null,
-    val userNameError: String? = null,
-    val emailError: String? = null,
-    val passwordError: String? = null,
-    val confirmPasswordError: String? = null,
+    val isLoading: Boolean = false,
+    val isSuccess: Boolean = false,
+    val errorMessage: UiText? = null,
+    val userNameError: UiText? = null,
+    val emailError: UiText? = null,
+    val passwordError: UiText? = null,
+    val confirmPasswordError: UiText? = null,
 )

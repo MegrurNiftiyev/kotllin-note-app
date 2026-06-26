@@ -11,9 +11,9 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
+import com.example.note_app_kotllin.core.util.UiText
 
 @Composable
 fun CustomTextField(
@@ -22,9 +22,9 @@ fun CustomTextField(
     label: String,
     placeholder: String,
     modifier: Modifier = Modifier,
-    errorMessage: String? = null
+    errorMessage: UiText? = null
 ) {
-    val isError= errorMessage!=null
+    val isError = errorMessage != null
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -64,7 +64,7 @@ fun CustomTextField(
         )
         if (isError) {
             Text(
-                text = errorMessage,
+                text = errorMessage!!.asString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(top = Paddings.Tiny, start = Paddings.Small)

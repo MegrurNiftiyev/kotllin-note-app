@@ -3,9 +3,9 @@
     <!-- ===== General ===== -->
     <string name="app_name">Not Uygulaması</string>
     <string name="cd_back">Geri</string>
-
-    <!-- ===== Notes ===== -->
-    <string name="notes_empty_state">Henüz not yok. Eklemek için + butonuna basın.</string>
+    <string name="error_unknown">Bir hata oluştu</string>
+    <string name="error_no_internet">İnternet bağlantısı yok</string>
+    <string name="error_too_many_requests">Çok fazla deneme. Lütfen bekleyin.</string>
 
     <!-- ===== Auth ===== -->
     <string name="welcome">Not Uygulamasına Hoş Geldiniz</string>
@@ -23,6 +23,23 @@
     <string name="dont_have_account">Hesabınız yok mu? </string>
     <string name="already_have_account">Zaten bir hesabınız var mı? </string>
     <string name="login_lowercase">giriş yap</string>
+    <string name="login_success">Giriş başarılı</string>
+    <string name="register_success">Kayıt başarılı</string>
+
+    <!-- ===== Auth Validation Errors ===== -->
+    <string name="error_invalid_credentials">E-posta veya şifre yanlış</string>
+    <string name="error_email_exists">Bu e-posta zaten kayıtlı</string>
+    <string name="error_empty_username">Kullanıcı adı boş olamaz</string>
+    <string name="error_invalid_username">En az 3 karakter, sadece harf, rakam, nokta ve tire</string>
+    <string name="error_empty_email">E-posta boş olamaz</string>
+    <string name="error_invalid_email">Geçerli bir e-posta girin</string>
+    <string name="error_empty_password">Şifre boş olamaz</string>
+    <string name="error_invalid_password">En az 8 karakter, büyük/küçük harf, rakam ve özel karakter</string>
+    <string name="error_empty_confirm_password">Lütfen şifrenizi tekrar girin</string>
+    <string name="error_passwords_not_match">Şifreler uyuşmuyor</string>
+
+    <!-- ===== Notes ===== -->
+    <string name="notes_empty_state">Henüz not yok. Eklemek için + butonuna basın.</string>
 
     <!-- ===== Note Detail ===== -->
     <string name="cd_delete">Notu sil</string>

@@ -7,9 +7,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,43 +26,78 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.note_app_kotllin.R
+import com.example.note_app_kotllin.core.constants.AppDurations
+import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
 import com.example.note_app_kotllin.core.navigation.Notes
 import com.example.note_app_kotllin.core.navigation.Register
 import com.example.note_app_kotllin.ui.screens.auth.components.CustomTextField
 import com.example.note_app_kotllin.ui.screens.auth.components.RichText
-import com.example.note_app_kotllin.ui.screens.auth.register.RegisterViewModel
+import kotlinx.coroutines.delay
 
+@Preview
 @Composable
 fun LoginScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: RegisterViewModel = hiltViewModel()
+    viewModel: LoginScreenViewModel = hiltViewModel()
 ) {
-    var emailTextInput by remember { mutableStateOf("") }
-    var passwordTextInput by remember { mutableStateOf("") }
+    var emailTextInput by remember { mutableStateOf("test@gmail.com") }
+    var passwordTextInput by remember { mutableStateOf("Test@1234") }
     val focusManager = LocalFocusManager.current
-val state by viewModel.state.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(state.errorMessage) {
+    val state by viewModel.state.collectAsState()
+    val snackBarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+    val loginSuccessMessage = stringResource(R.string.login_success)
 
+    LaunchedEffect(state.errorMessage) {
+        state.errorMessage?.let {
+            snackBarHostState.showSnackbar(it.asString(context))
+        }
     }
-    Scaffold { innerPadding ->
+    LaunchedEffect(state.isSuccess) {
+        if (state.isSuccess) {
+            snackBarHostState.showSnackbar(loginSuccessMessage)
+            delay(AppDurations.MediumPlus)
+            navController.navigate(Notes) {
+                popUpTo(Register) {
+                    inclusive = true
+                }
+            }
+        }
+    }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackBarHostState) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    containerColor = if (state.isSuccess) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.errorContainer,
+                    contentColor = if (state.isSuccess) MaterialTheme.colorScheme.onPrimaryContainer
+                    else MaterialTheme.colorScheme.onErrorContainer,
+                    shape = RoundedCornerShape(BorderRadiuses.Medium)
+                )
+            }
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .background(color = MaterialTheme.colorScheme.background)
-                .padding(innerPadding).pointerInput(Unit){
+                .padding(innerPadding)
+                .pointerInput(Unit) {
                     detectTapGestures(onTap = {
                         focusManager.clearFocus()
                     })
-                }
-        ) {
+                }) {
             Spacer(modifier = Modifier.height(70.dp))
 
             Text(
@@ -93,11 +132,21 @@ val state by viewModel.state.collectAsState()
 
                 Spacer(modifier = Modifier.height(20.dp))
                 OutlinedButton(
-                    modifier = Modifier.fillMaxWidth().padding(Paddings.Tiny),
-                    onClick = {   navController.navigate(Notes) }
-                )
-                {
-                    Text(text = stringResource(R.string.login), style = MaterialTheme.typography.bodyLarge)
+                    modifier = Modifier
+                        .fillMaxWidth().height(70.dp)
+                        .padding(Paddings.Tiny), onClick = {
+                        viewModel.login(emailTextInput, passwordTextInput)
+
+                    }) {
+                  if(  state.isLoading){
+                      CircularProgressIndicator()
+                  }else{
+                      Text(
+                          text = stringResource(R.string.login),
+                          style = MaterialTheme.typography.bodyLarge
+                      )
+                  }
+
                 }
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -105,7 +154,9 @@ val state by viewModel.state.collectAsState()
                     startText = stringResource(R.string.dont_have_account),
                     clickableText = stringResource(R.string.register),
                     onLinkClicked = { navController.navigate(Register) },
-                    modifier = Modifier.align(Alignment.CenterHorizontally).padding(Paddings.Tiny)
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(Paddings.Tiny)
                 )
             }
         }
