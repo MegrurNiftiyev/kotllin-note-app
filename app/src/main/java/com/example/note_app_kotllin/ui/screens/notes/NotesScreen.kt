@@ -81,7 +81,7 @@ fun NotesScreen(
 
                 modifier = Modifier.background(color = MaterialTheme.colorScheme.primary),
                 onClick = {
-                    viewModel.addNote(title = "test", "test")
+                    viewModel.addNote( "test", "test")
                 }
 
             ) {
@@ -104,9 +104,9 @@ fun NotesScreen(
                 items(state.notes) { pair ->
                     NoteCard(
                         title = pair.title,
-                        subtitle = pair.subtitle,
+                        subtitle = pair.content,
                         onClick = {
-                            navController.navigate(NoteDetail(pair.id, pair.title, pair.subtitle))
+                            navController.navigate(NoteDetail(pair.id, pair.title, pair.content))
                         }
                     )
                 }

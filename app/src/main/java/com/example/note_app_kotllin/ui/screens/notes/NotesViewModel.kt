@@ -22,34 +22,34 @@ class NotesViewModel @Inject constructor() : ViewModel() {
         _state.update { it.copy() }
     }
 
-    fun addNote(title: String, subtitle: String) {
-        _state.update { it.copy(notes = it.notes + Note(title = title, subtitle = subtitle)) }
+    fun addNote(title: String, content: String) {
+        _state.update { it.copy(notes = it.notes + Note(title = title, content = content)) }
     }
 
     init {
         mutableStateListOf<Note>(
             Note(
                 title = "Shopping List",
-                subtitle = "Buy milk, bread, eggs, and butter from the local grocery store."
+                content = "Buy milk, bread, eggs, and butter from the local grocery store."
             ),
             Note(
                 title = "University Tasks",
-                subtitle = "Review the layers of the OSI model for the Informatics exam."
+                content = "Review the layers of the OSI model for the Informatics exam."
             ),
             Note(
                 title = "Coding Projects",
-                subtitle = "Refactor the mobile app navigation using Jetpack Compose."
+                content = "Refactor the mobile app navigation using Jetpack Compose."
             ),
             Note(
                 title = "Piano Maintenance",
-                subtitle = "Check the tuning and internal mechanism of the acoustic piano."
+                content = "Check the tuning and internal mechanism of the acoustic piano."
             ),
             Note(
                 title = "Random Ideas",
-                subtitle = "Research Server-Driven UI concepts and how to handle dynamic routes."
+                content = "Research Server-Driven UI concepts and how to handle dynamic routes."
             )
         ).forEach { note ->
-            addNote(note.title, note.subtitle)
+            addNote(note.title, note.content)
         }
     }
 }

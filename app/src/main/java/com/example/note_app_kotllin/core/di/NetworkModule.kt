@@ -72,7 +72,6 @@ object  NetworkModule {
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
     }
-    //connections
 
     @Provides
     @Singleton

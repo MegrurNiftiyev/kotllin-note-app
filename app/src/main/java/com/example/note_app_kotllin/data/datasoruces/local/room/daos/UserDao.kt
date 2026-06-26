@@ -1,0 +1,19 @@
+package com.example.note_app_kotllin.data.datasoruces.local.room.daos
+
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.note_app_kotllin.data.datasoruces.local.room.entities.UserEntity
+import kotlinx.coroutines.flow.Flow
+
+interface UserDao{
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUser(user: UserEntity)
+
+    @Query("SELECT * FROM User LIMIT 1")
+    fun getCurrentUser(): Flow<UserEntity>
+
+    @Query("DELETE FROM User")
+    fun clearUser()
+}
