@@ -11,4 +11,6 @@ data class TodoEntity (
     val createdAt: Long,
     val updatedAt: Long,
     val isSynced: Boolean,
-    )
+    val isDeleted: Boolean = false
+
+)

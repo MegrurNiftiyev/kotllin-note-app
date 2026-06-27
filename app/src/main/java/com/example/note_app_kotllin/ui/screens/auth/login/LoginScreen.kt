@@ -48,7 +48,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun LoginScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: LoginScreenViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     var emailTextInput by remember { mutableStateOf("test@gmail.com") }
     var passwordTextInput by remember { mutableStateOf("Test@1234") }

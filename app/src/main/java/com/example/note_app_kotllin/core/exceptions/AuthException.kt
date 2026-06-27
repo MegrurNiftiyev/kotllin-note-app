@@ -10,5 +10,4 @@ sealed class AuthException(override val message: String) : Exception() {
     data class TokenNotFound(override val message: String="Token not found in cache") : AuthException(message)
     data class ServerError(override val message: String = "Internal server error") : AuthException(message)
     data class Unknown(override val message: String = "An unexpected error occurred") : AuthException(message)
-
 }

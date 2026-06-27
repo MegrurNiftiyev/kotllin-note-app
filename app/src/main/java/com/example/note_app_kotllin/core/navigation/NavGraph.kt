@@ -12,6 +12,7 @@ import com.example.note_app_kotllin.ui.screens.auth.register.RegisterScreen
 import com.example.note_app_kotllin.ui.screens.notedetail.NoteDetailScreen
 import com.example.note_app_kotllin.ui.screens.notes.NotesScreen
 import com.example.note_app_kotllin.ui.screens.settings.SettingsScreen
+import com.example.note_app_kotllin.ui.screens.todo.TodoScreen
 
 
 @Composable
@@ -22,6 +23,7 @@ fun NoteAppNavGraph(
         composable<Register> { RegisterScreen(navController) }
         composable<Login> { LoginScreen(navController) }
         composable<Notes> { NotesScreen(navController) }
+        composable<Todos> { TodoScreen(navController) }
         composable<Settings> { SettingsScreen(navController) }
         composable<NoteDetail> { backStackEntry ->
             val args = backStackEntry.toRoute<NoteDetail>()

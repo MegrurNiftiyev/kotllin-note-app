@@ -4,6 +4,7 @@ import com.example.note_app_kotllin.core.constants.CacheKeys
 import com.example.note_app_kotllin.core.exceptions.AuthException
 import com.example.note_app_kotllin.core.exceptions.NetworkException
 import com.example.note_app_kotllin.core.managers.EncryptedCacheManager
+import com.example.note_app_kotllin.data.datasoruces.local.UserLocalDataSource
 import com.example.note_app_kotllin.data.datasoruces.remote.datasources.AuthRemoteDataSource
 import com.example.note_app_kotllin.domain.models.User
 import com.example.note_app_kotllin.domain.repositories.IAuthRepository
@@ -14,7 +15,8 @@ import javax.inject.Singleton
 @Singleton
 class AuthRepository @Inject constructor(
     private val remoteDataSource: AuthRemoteDataSource,
-    private val encryptedCacheManager: EncryptedCacheManager
+    private val encryptedCacheManager: EncryptedCacheManager,
+    private val localDataSource: UserLocalDataSource
 
 ) : IAuthRepository {
 
@@ -27,9 +29,13 @@ class AuthRepository @Inject constructor(
             encryptedCacheManager.saveSecureString(
                 CacheKeys.REFRESH_TOKEN, response.data.refreshToken
             )
+            val user = response.data.user
+
+            localDataSource.saveUser(user.toEntityUser())
+
             android.util.Log.e("REGISTER", response.data.toString())
 
-            Result.success(response.data.user.toDomainUser())
+            Result.success(user.toDomainUser())
         } catch (e: AuthException) {
             Result.failure(e)
         } catch (e: NetworkException) {
@@ -48,9 +54,15 @@ class AuthRepository @Inject constructor(
             encryptedCacheManager.saveSecureString(
                 CacheKeys.REFRESH_TOKEN, response.data.refreshToken
             )
-            android.util.Log.e("LOGIN", response.data.toString())
 
-            Result.success(response.data.user.toDomainUser())
+            val user = response.data.user
+
+            localDataSource.saveUser(user.toEntityUser())
+
+            android.util.Log.e("LOGIN", response.data.toString())
+            android.util.Log.e("USER CACHED TABLE", localDataSource.getCurrentUser().toString())
+
+            Result.success(user.toDomainUser())
 
         } catch (e: AuthException) {
             Result.failure(e)
@@ -67,6 +79,7 @@ class AuthRepository @Inject constructor(
             if (refreshToken == null) return Result.failure(AuthException.TokenNotFound())
             remoteDataSource.logout(refreshToken)
             encryptedCacheManager.clearAllCache()
+            localDataSource.clearUser()
             Result.success(Unit)
         } catch (e: AuthException) {
             Result.failure(e)

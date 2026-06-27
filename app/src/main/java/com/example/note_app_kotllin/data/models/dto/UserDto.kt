@@ -1,5 +1,6 @@
 package com.example.note_app_kotllin.data.models.dto
 
+import com.example.note_app_kotllin.data.datasoruces.local.room.entities.UserEntity
 import com.example.note_app_kotllin.domain.models.User
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -19,7 +20,16 @@ data class UserDto(
             id = this.id,
             name = this.name,
             email = this.email,
-            createdAt = this.createdAt
+            createdAt = this.createdAt.toLongOrNull() ?: System.currentTimeMillis()
+        )
+    }
+
+    fun toEntityUser(): UserEntity {
+        return UserEntity(
+            id = this.id,
+            name = this.name,
+            email = this.email,
+            createdAt =this.createdAt.toLongOrNull() ?: System.currentTimeMillis()
         )
     }
 }

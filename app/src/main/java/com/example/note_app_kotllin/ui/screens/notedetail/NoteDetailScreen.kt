@@ -10,6 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,6 +25,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,36 +34,43 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun NoteDetailScreen(
-    id: String = "id",
-    title: String = "title",
-    subtitle: String = "Subtitle",
-    navController: NavHostController = rememberNavController(),
+    id: String = "",
+    title: String = "",
+    subtitle: String = "",
+    navController: NavHostController,
     viewModel: NoteDetailViewModel = hiltViewModel()
-    ) {
+) {
     var titleTextInput by remember { mutableStateOf(title) }
     var subtitleTextInput by remember { mutableStateOf(subtitle) }
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
+
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.handleSaveOrDelete(
+                id = id,
+                initialTitle = title,
+                initialContent = subtitle,
+                currentTitle = titleTextInput,
+                currentContent = subtitleTextInput
+            )
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(" ") },
                 navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            navController.popBackStack()
-                        }
-                    ) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(id = R.string.cd_back)
@@ -68,8 +78,15 @@ fun NoteDetailScreen(
                     }
                 },
                 actions = {
+                    Icon(
+                        imageVector = if (state.isSynced) Icons.Filled.Check else Icons.Filled.Close,
+                        contentDescription = null,
+                        tint = if (state.isSynced) MaterialTheme.colorScheme.primary else Color.Gray,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
                     IconButton(
                         onClick = {
+                            viewModel.deleteNoteDirectly(id)
                             navController.popBackStack()
                         }
                     ) {
@@ -78,11 +95,7 @@ fun NoteDetailScreen(
                             contentDescription = stringResource(id = R.string.cd_delete)
                         )
                     }
-                    IconButton(
-                        onClick = {
-                            navController.popBackStack()
-                        }
-                    ) {
+                    IconButton(onClick = {  }) {
                         Icon(
                             Icons.Default.Share,
                             contentDescription = stringResource(id = R.string.cd_share)
@@ -105,9 +118,7 @@ fun NoteDetailScreen(
                 modifier = Modifier.fillMaxWidth().background(color = Color.Transparent),
                 textStyle = MaterialTheme.typography.titleLarge,
                 maxLines = 3,
-                placeholder = {
-                    Text(stringResource(id = R.string.hint_title))
-                },
+                placeholder = { Text(stringResource(id = R.string.hint_title)) },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
@@ -127,9 +138,7 @@ fun NoteDetailScreen(
                 onValueChange = { subtitleTextInput = it },
                 modifier = Modifier.fillMaxSize(),
                 textStyle = MaterialTheme.typography.bodyLarge,
-                placeholder = {
-                    Text(stringResource(id = R.string.hint_subtitle))
-                },
+                placeholder = { Text(stringResource(id = R.string.hint_subtitle)) },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
@@ -142,5 +151,3 @@ fun NoteDetailScreen(
         }
     }
 }
-
-

@@ -20,11 +20,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object  NetworkModule {
+object NetworkModule {
 
     private val json = Json { ignoreUnknownKeys = true }
     private val contentType = "application/json".toMediaType()
-
 
     @Provides
     @Singleton
@@ -42,10 +41,9 @@ object  NetworkModule {
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-           // .authenticator(tokenAuthenticator)
+            // .authenticator(tokenAuthenticator)
             .build()
     }
-
 
     @Provides
     @Singleton
@@ -75,16 +73,8 @@ object  NetworkModule {
 
     @Provides
     @Singleton
-    fun  provideAuthApiService(@Named("AppRetrofit") retrofit: Retrofit): AuthApiService {
+    fun provideAuthApiService(@Named("AuthRetrofit") retrofit: Retrofit): AuthApiService {
         return retrofit.create(AuthApiService::class.java)
-
-    }
-
-    @Provides
-    @Singleton
-    fun provideNoteApiService(@Named("AppRetrofit") retrofit: Retrofit): NoteApiService {
-
-        return retrofit.create(NoteApiService::class.java)
     }
 
     @Provides
@@ -93,5 +83,9 @@ object  NetworkModule {
         return retrofit.create(UserApiService::class.java)
     }
 
-
+    @Provides
+    @Singleton
+    fun provideNoteApiService(@Named("AppRetrofit") retrofit: Retrofit): NoteApiService {
+        return retrofit.create(NoteApiService::class.java)
+    }
 }

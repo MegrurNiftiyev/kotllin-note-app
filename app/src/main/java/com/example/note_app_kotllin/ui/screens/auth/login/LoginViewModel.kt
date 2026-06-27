@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginScreenViewModel @Inject constructor(
+class LoginViewModel @Inject constructor(
     private val authRepository: IAuthRepository
 ) : ViewModel() {
 

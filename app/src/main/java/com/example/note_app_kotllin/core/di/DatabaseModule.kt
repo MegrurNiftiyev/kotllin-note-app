@@ -2,8 +2,10 @@ package com.example.note_app_kotllin.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.note_app_kotllin.core.constants.CacheKeys
 import com.example.note_app_kotllin.data.datasoruces.local.room.AppDatabase
 import com.example.note_app_kotllin.data.datasoruces.local.room.daos.NoteDao
+import com.example.note_app_kotllin.data.datasoruces.local.room.daos.TodoDao
 import com.example.note_app_kotllin.data.datasoruces.local.room.daos.UserDao
 import dagger.Module
 import dagger.Provides
@@ -22,8 +24,14 @@ object DatabaseModule {
         @ApplicationContext context: Context
     ): AppDatabase {
         return Room.databaseBuilder(
-            context, AppDatabase::class.java, "note_app_database"
+            context, AppDatabase::class.java, CacheKeys.ROOM_DATABASE
         ).fallbackToDestructiveMigration().build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDao(database: AppDatabase): UserDao {
+        return database.userDao()
     }
 
     @Provides
@@ -34,7 +42,8 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideUserDao(database: AppDatabase): UserDao {
-        return database.userDao()
+    fun provideTodoDao(database: AppDatabase): TodoDao {
+        return database.todoDao()
     }
+
 }

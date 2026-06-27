@@ -13,9 +13,10 @@ object CacheKeys {
 
     const val REFRESH_TOKEN = "refresh_token"
 
-    const val USER_ID = "user_id"
 
-    const val USER_NAME = "user_name"
+    //Room
+
+    const val  ROOM_DATABASE="note_app_database"
 }
 
 

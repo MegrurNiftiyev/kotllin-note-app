@@ -20,3 +20,7 @@ data class NoteDetail(
     val title: String,
     val subtitle: String
 )
+
+
+@Serializable
+object Todos

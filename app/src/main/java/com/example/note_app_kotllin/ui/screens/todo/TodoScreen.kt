@@ -10,7 +10,8 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun TodoScreen(
-    viewModel: TodoViewModel = hiltViewModel(), navController: NavHostController
+    navController: NavHostController ,
+    viewModel: TodoViewModel = hiltViewModel(),
 ) {
     Scaffold { innerPadding ->
         Column(
