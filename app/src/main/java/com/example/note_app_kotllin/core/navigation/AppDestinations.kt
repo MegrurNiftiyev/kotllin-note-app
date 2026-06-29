@@ -3,10 +3,16 @@ package com.example.note_app_kotllin.core.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object Login
+object Home
+
+@Serializable
+object Splash
 
 @Serializable
 object Register
+@Serializable
+object Login
+
 
 @Serializable
 object Notes

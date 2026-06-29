@@ -38,6 +38,7 @@ import com.example.note_app_kotllin.R
 import com.example.note_app_kotllin.core.constants.AppDurations
 import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
+import com.example.note_app_kotllin.core.constants.Spaces
 import com.example.note_app_kotllin.core.navigation.Login
 import com.example.note_app_kotllin.core.navigation.Notes
 import com.example.note_app_kotllin.core.navigation.Register
@@ -100,7 +101,7 @@ fun RegisterScreen(
                         focusManager.clearFocus()
                     })
                 }) {
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(Spaces.TopSpace))
 
             Text(
                 text = stringResource(R.string.welcome),
@@ -108,7 +109,7 @@ fun RegisterScreen(
                 modifier = Modifier.padding(Paddings.Medium)
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(Spaces.LargeMinus))
 
             Column(
                 modifier = Modifier
@@ -145,7 +146,7 @@ fun RegisterScreen(
 
                     errorMessage = state.confirmPasswordError
                 )
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(Spaces.LargeMinus))
                 OutlinedButton(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -169,12 +170,12 @@ fun RegisterScreen(
                     }
 
                 }
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(Spaces.LargeMinus))
 
                 RichText(
                     startText = stringResource(R.string.already_have_account),
                     clickableText = stringResource(R.string.login_lowercase),
-                    onLinkClicked = { navController.navigate(Login) },
+                        onLinkClicked = { navController.navigate(Login) },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .height(40.dp)

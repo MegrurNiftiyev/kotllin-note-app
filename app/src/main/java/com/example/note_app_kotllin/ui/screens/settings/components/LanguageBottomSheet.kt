@@ -59,7 +59,7 @@ fun LanguageBottomSheet(
             LangItem(
                 context = context,
                 langCode = LanguageCodes.tr,
-                languageResId = R.string.lang_en,
+                languageResId = R.string.lang_tr,
                 onDismissRequest = onDismissRequest
             )
 

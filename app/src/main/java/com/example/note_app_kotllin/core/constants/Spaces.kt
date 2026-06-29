@@ -18,4 +18,6 @@ object Spaces {
     val ExtraLargePlus = 28.dp
     val Huge = 30.dp
     val ExtraHuge = 32.dp
+    val TopSpace=70.dp
+
 }

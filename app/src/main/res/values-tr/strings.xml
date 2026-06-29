@@ -51,6 +51,8 @@
     <string name="settings_title">Ayarlar</string>
     <string name="settings_language">Dil</string>
     <string name="settings_dark_mode">Koyu Mod</string>
+    <string name="settings_logout">Çıkış yap</string>
+
 
     <!-- ===== Language Sheet ===== -->
     <string name="language_sheet_title">Dil seçin</string>

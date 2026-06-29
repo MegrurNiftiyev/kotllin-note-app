@@ -38,6 +38,7 @@ import com.example.note_app_kotllin.R
 import com.example.note_app_kotllin.core.constants.AppDurations
 import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
+import com.example.note_app_kotllin.core.navigation.Login
 import com.example.note_app_kotllin.core.navigation.Notes
 import com.example.note_app_kotllin.core.navigation.Register
 import com.example.note_app_kotllin.ui.screens.auth.components.CustomTextField
@@ -68,7 +69,7 @@ fun LoginScreen(
             snackBarHostState.showSnackbar(loginSuccessMessage)
             delay(AppDurations.MediumPlus)
             navController.navigate(Notes) {
-                popUpTo(Register) {
+                popUpTo(Login) {
                     inclusive = true
                 }
             }

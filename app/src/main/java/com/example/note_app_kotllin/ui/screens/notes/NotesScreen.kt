@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,9 +34,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.note_app_kotllin.R
+import com.example.note_app_kotllin.core.constants.Paddings
+import com.example.note_app_kotllin.core.constants.Spaces
 import com.example.note_app_kotllin.core.navigation.NoteDetail
 import com.example.note_app_kotllin.core.navigation.Settings
 import com.example.note_app_kotllin.ui.screens.notes.components.NoteCard
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +69,7 @@ fun NotesScreen(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(
-                modifier = Modifier.background(color = MaterialTheme.colorScheme.primary),
+                containerColor = MaterialTheme.colorScheme.primary,
                 onClick = { navController.navigate(NoteDetail("", "", "")) }
             ) {
                 Icon(Icons.Default.Add, contentDescription = null)
@@ -90,8 +94,8 @@ fun NotesScreen(
                     } else {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                            contentPadding = PaddingValues(Paddings.Medium),
+                            verticalArrangement = Arrangement.spacedBy(Spaces.Medium)
                         ) {
                             items(state.notes) { pair ->
                                 NoteCard(

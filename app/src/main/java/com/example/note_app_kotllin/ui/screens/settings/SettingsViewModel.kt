@@ -2,6 +2,7 @@ package com.example.note_app_kotllin.ui.screens.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.note_app_kotllin.domain.repositories.IAuthRepository
 import com.example.note_app_kotllin.domain.repositories.ISettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val settingsRepository: ISettingsRepository
+    private val settingsRepository: ISettingsRepository,
+    private val authRepository: IAuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SettingsState())
@@ -42,4 +44,11 @@ class SettingsViewModel @Inject constructor(
     fun closeLanguageSheet() {
         _state.update { it.copy(isLanguageSheetOpen = false) }
     }
+
+    fun logout(){
+        viewModelScope.launch {
+            authRepository.logout()
+        }
+    }
+
 }

@@ -4,13 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.note_app_kotllin.domain.repositories.INotesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 @HiltViewModel
 class NotesViewModel @Inject constructor(
     private val notesRepository: INotesRepository
@@ -20,30 +20,33 @@ class NotesViewModel @Inject constructor(
     val state: StateFlow<NotesState> = _state.asStateFlow()
 
     init {
-        fetchNotes()
+        listenLocalNotes()
+        syncNotes()
+    }
+
+    private fun listenLocalNotes() {
+        viewModelScope.launch {
+            notesRepository.getAllNotes().collect { notes ->
+                _state.update { it.copy(notes = notes) }
+            }
+        }
+    }
+
+    private fun syncNotes() {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            notesRepository.syncNotes()
+                .onSuccess { _state.update { it.copy(isLoading = false, errorMessage = null) } }
+                .onFailure { e -> _state.update { it.copy(isLoading = false, errorMessage = e.localizedMessage) } }
+        }
     }
 
     fun refreshNotes() {
-        _state.update { it.copy(isRefreshing = true) }
-        fetchNotes()
-    }
-
-    fun fetchNotes() {
         viewModelScope.launch {
-            if (!_state.value.isRefreshing) {
-                _state.update { it.copy(isLoading = true, errorMessage = null) }
-            }
-            notesRepository.getAllNotes()
-                .onSuccess { notesList ->
-                    _state.update {
-                        it.copy(notes = notesList, isLoading = false, isRefreshing = false)
-                    }
-                }
-                .onFailure { exception ->
-                    _state.update {
-                        it.copy(errorMessage = exception.localizedMessage, isLoading = false, isRefreshing = false)
-                    }
-                }
+            _state.update { it.copy(isRefreshing = true) }
+            notesRepository.syncNotes()
+                .onSuccess { _state.update { it.copy(isRefreshing = false, errorMessage = null) } }
+                .onFailure { e -> _state.update { it.copy(isRefreshing = false, errorMessage = e.localizedMessage) } }
         }
     }
 }

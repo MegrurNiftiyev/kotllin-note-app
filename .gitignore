@@ -43,13 +43,12 @@ local.properties
 # Log faylları
 *.log
 
-# NDL/C++ lokal keşləri (gələcəkdə lazım ola bilər)
+# NDL/C++ lokal cache
 .externalNativeBuild/
 .cxx/
 
-# OS tərəfindən yaradılan lazımsız fayllar
 .DS_Store
 Thumbs.db
 
-# Android Studio Captures (Profil dataları, screenshotlar)
+# Android Studio Captures
 captures/

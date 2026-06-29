@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.note_app_kotllin.core.constants.Paddings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,6 +66,7 @@ fun NoteDetailScreen(
         }
     }
 
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -82,7 +84,7 @@ fun NoteDetailScreen(
                         imageVector = if (state.isSynced) Icons.Filled.Check else Icons.Filled.Close,
                         contentDescription = null,
                         tint = if (state.isSynced) MaterialTheme.colorScheme.primary else Color.Gray,
-                        modifier = Modifier.padding(horizontal = 8.dp)
+                        modifier = Modifier.padding(horizontal = Paddings.ExtraSmall)
                     )
                     IconButton(
                         onClick = {
@@ -108,7 +110,7 @@ fun NoteDetailScreen(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(12.dp)
+                .padding(Paddings.Small)
                 .verticalScroll(scrollState)
         ) {
             Text(subtitleTextInput.length.toString(), modifier = Modifier.align(Alignment.End))
@@ -131,7 +133,7 @@ fun NoteDetailScreen(
             HorizontalDivider(
                 thickness = 1.dp,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(vertical = 12.dp)
+                modifier = Modifier.padding(vertical = Paddings.Small)
             )
             TextField(
                 value = subtitleTextInput,

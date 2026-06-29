@@ -1,15 +1,17 @@
 package com.example.note_app_kotllin.ui.screens.notedetail
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.note_app_kotllin.domain.repositories.INotesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
 
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
@@ -36,7 +38,9 @@ class NoteDetailViewModel @Inject constructor(
         if (trimmedTitle.isEmpty() && trimmedContent.isEmpty()) {
             if (id.isNotEmpty()) {
                 viewModelScope.launch {
-                    notesRepository.deleteNote(id)
+                    withContext(NonCancellable) {
+                        notesRepository.deleteNote(id)
+                    }
                 }
             }
             return
@@ -44,14 +48,16 @@ class NoteDetailViewModel @Inject constructor(
 
         viewModelScope.launch {
             _state.update { it.copy(isSaving = true) }
-            if (id.isEmpty()) {
-                notesRepository.createNote(trimmedTitle, trimmedContent)
-                    .onSuccess { _state.update { it.copy(isSynced = true, isSaving = false) } }
-                    .onFailure { _state.update { it.copy(isSynced = false, isSaving = false) } }
-            } else {
-                notesRepository.updateNote(id, trimmedTitle, trimmedContent)
-                    .onSuccess { _state.update { it.copy(isSynced = true, isSaving = false) } }
-                    .onFailure { _state.update { it.copy(isSynced = false, isSaving = false) } }
+            withContext(NonCancellable) {
+                if (id.isEmpty()) {
+                    notesRepository.createNote(trimmedTitle, trimmedContent)
+                        .onSuccess { _state.update { it.copy(isSynced = true, isSaving = false) } }
+                        .onFailure { _state.update { it.copy(isSynced = false, isSaving = false) } }
+                } else {
+                    notesRepository.updateNote(id, trimmedTitle, trimmedContent)
+                        .onSuccess { _state.update { it.copy(isSynced = true, isSaving = false) } }
+                        .onFailure { _state.update { it.copy(isSynced = false, isSaving = false) } }
+                }
             }
         }
     }
@@ -59,7 +65,9 @@ class NoteDetailViewModel @Inject constructor(
     fun deleteNoteDirectly(id: String) {
         if (id.isNotEmpty()) {
             viewModelScope.launch {
-                notesRepository.deleteNote(id)
+                withContext(NonCancellable) {
+                    notesRepository.deleteNote(id)
+                }
             }
         }
     }
