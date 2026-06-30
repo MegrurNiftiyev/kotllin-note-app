@@ -12,43 +12,40 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.example.note_app_kotllin.core.navigation.Login
-import com.example.note_app_kotllin.core.navigation.Notes
+import com.example.note_app_kotllin.core.navigation.Home
 import com.example.note_app_kotllin.core.navigation.Register
 import com.example.note_app_kotllin.core.navigation.Splash
-import com.example.note_app_kotllin.ui.screens.notes.NotesScreen
 
 @Composable
 fun SplashScreen(
-    navController: NavHostController,
-    viewModel: SplashViewModel= hiltViewModel()
-){
-val state by viewModel.state.collectAsStateWithLifecycle()
+    navController: NavHostController, viewModel: SplashViewModel = hiltViewModel()
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.isAuthenticated) {
 
-            if(state.isAuthenticated){
-                navController.navigate(Notes){
-                    popUpTo(Splash) {
-                        inclusive = true
-                    }
+        if (state.isAuthenticated) {
+            navController.navigate(Home) {
+                popUpTo(Splash) {
+                    inclusive = true
                 }
-
-            }else{
-                navController.navigate(Register){
-                    popUpTo(Splash) {
-                        inclusive = true
-                    }
-                }
-
             }
 
+        } else {
+            navController.navigate(Register) {
+                popUpTo(Splash) {
+                    inclusive = true
+                }
+            }
+
+        }
+
     }
-    Scaffold() {innerPadding->
+    Scaffold { innerPadding ->
         Column(
             modifier = Modifier.padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-            ){
+        ) {
 
         }
 

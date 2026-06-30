@@ -24,7 +24,8 @@ object Settings
 data class NoteDetail(
     val id: String,
     val title: String,
-    val subtitle: String
+    val subtitle: String,
+    val isSynced: Boolean
 )
 
 

@@ -1,4 +1,5 @@
 package com.example.note_app_kotllin.core.di
+//import com.example.note_app_kotllin.BuildConfig
 
 import com.example.note_app_kotllin.core.constants.ApiUrls
 import com.example.note_app_kotllin.core.interceptors.AuthInterceptor
@@ -13,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Named
@@ -32,15 +34,29 @@ object NetworkModule {
         return OkHttpClient.Builder().build()
     }
 
+
+    @Provides
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+         //   level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+         //   } else {
+           //     HttpLoggingInterceptor.Level.NONE
+//}
+        }
+    }
     @Provides
     @Singleton
     @Named("NormalOkHttpClient")
     fun provideNormalOkHttpClient(
         authInterceptor: AuthInterceptor,
-        tokenAuthenticator: TokenAuthenticator
+        tokenAuthenticator: TokenAuthenticator,
+        loggingInterceptor: HttpLoggingInterceptor
+
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
+            .addInterceptor(authInterceptor).addInterceptor (  loggingInterceptor)
             // .authenticator(tokenAuthenticator)
             .build()
     }

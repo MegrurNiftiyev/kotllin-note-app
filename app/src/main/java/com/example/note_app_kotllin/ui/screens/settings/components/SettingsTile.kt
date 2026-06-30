@@ -1,6 +1,5 @@
 package com.example.note_app_kotllin.ui.screens.settings.components
 
-import android.text.Layout
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
+
 @Composable
 fun SettingTile(
     title: String? = null,
@@ -27,17 +27,19 @@ fun SettingTile(
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     trailingContent: @Composable (() -> Unit)? = null
 ) {
-    val shape = RoundedCornerShape(BorderRadiuses.Medium)
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = Paddings.MediumPlus, vertical = Paddings.Small)
-            .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = shape)
-            .clip(shape)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = RoundedCornerShape(BorderRadiuses.Medium)
+            )
+            .clip(RoundedCornerShape(BorderRadiuses.Medium))
             .clickable { onClick() }
-            .padding(horizontal = Paddings.ExtraLarge, vertical = Paddings.MediumPlus)
-    ) {
+            .padding(horizontal = Paddings.ExtraLarge, vertical = Paddings.MediumPlus)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = horizontalArrangement,

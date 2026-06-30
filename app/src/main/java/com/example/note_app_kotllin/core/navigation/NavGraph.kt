@@ -23,7 +23,7 @@ fun NoteAppNavGraph(
 ) {
     NavHost(navController = navController, startDestination = Splash) {
         composable <Splash>{ SplashScreen(navController) }
-        composable<Home> { HomeScreen() }
+        composable<Home> { HomeScreen(navController) }
         composable<Register> { RegisterScreen(navController) }
         composable<Login> { LoginScreen(navController) }
         composable<Notes> { NotesScreen(navController) }
@@ -32,7 +32,7 @@ fun NoteAppNavGraph(
 
         composable<NoteDetail> { backStackEntry ->
             val args = backStackEntry.toRoute<NoteDetail>()
-            NoteDetailScreen(args.id, args.title, args.subtitle, navController)
+            NoteDetailScreen(args.id, args.title, args.subtitle, args.isSynced,navController)
         }
     }
 }

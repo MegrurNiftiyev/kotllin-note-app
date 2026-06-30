@@ -22,7 +22,8 @@ retrofit = "2.11.0"
 securityCrypto = "1.1.0-alpha06"
 room = "2.6.1"
 foundationLayout = "1.11.3"
-
+ui = "1.11.3"
+okhttpLoggingInterceptor = "4.12.0"
 
 
 [libraries]
@@ -58,6 +59,9 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLoggingInterceptor" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

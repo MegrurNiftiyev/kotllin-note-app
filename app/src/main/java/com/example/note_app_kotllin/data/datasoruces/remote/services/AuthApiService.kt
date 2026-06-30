@@ -11,7 +11,7 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-//api terfde mobile ve web clinlerden gelen responlar ferlqidi mobilde refresle berber accesde gelir ama webde
+//api terfde mobile ve web clitnlerden gelen responlar ferlqidi mobilde refresle berber accesde gelir ama webde
 //Http only olduqu ucun bir basa cookiye yazilir ona gore Headers hissei elve edilib ve sadce auth
 // endpiti ucun seciyyevidir bu qayda
 

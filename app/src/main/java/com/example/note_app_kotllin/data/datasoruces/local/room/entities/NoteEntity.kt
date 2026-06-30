@@ -22,7 +22,8 @@ data class NoteEntity(
             title = this.title,
             content = this.content,
             createdAt = this.createdAt,
-            updatedAt = this.updatedAt
+            updatedAt = this.updatedAt,
+            isSynced = this.isSynced
         )
     }
 }

@@ -1,6 +1,5 @@
 package com.example.note_app_kotllin.ui.screens.notes
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,17 +37,17 @@ import com.example.note_app_kotllin.core.constants.Spaces
 import com.example.note_app_kotllin.core.navigation.NoteDetail
 import com.example.note_app_kotllin.core.navigation.Settings
 import com.example.note_app_kotllin.ui.screens.notes.components.NoteCard
-import kotlinx.coroutines.delay
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotesScreen(
     navController: NavHostController,
+    parentPadding: PaddingValues = PaddingValues(),
     viewModel: NotesViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             Column {
                 TopAppBar(
@@ -66,20 +64,19 @@ fun NotesScreen(
                 HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             }
         },
-        modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
-                onClick = { navController.navigate(NoteDetail("", "", "")) }
+                onClick = { navController.navigate(NoteDetail("", "", "", true)) },
+                modifier = Modifier.padding(bottom = parentPadding.calculateBottomPadding()- Paddings.Medium)
             ) {
                 Icon(Icons.Default.Add, contentDescription = null)
             }
         }
-    ) { innerPadding ->
+    ) {
+
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+
         ) {
             if (state.isLoading && state.notes.isEmpty()) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -102,7 +99,9 @@ fun NotesScreen(
                                     title = pair.title,
                                     subtitle = pair.content,
                                     onClick = {
-                                        navController.navigate(NoteDetail(pair.id, pair.title, pair.content))
+                                        navController.navigate(
+                                            NoteDetail(pair.id, pair.title, pair.content, pair.isSynced)
+                                        )
                                     }
                                 )
                             }
@@ -113,12 +112,10 @@ fun NotesScreen(
         }
     }
 }
-
 @Composable
 fun EmptyState() {
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
         Text(
             text = stringResource(R.string.notes_empty_state),

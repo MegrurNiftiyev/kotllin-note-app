@@ -46,6 +46,7 @@ fun NoteDetailScreen(
     id: String = "",
     title: String = "",
     subtitle: String = "",
+    isSynced: Boolean = true,
     navController: NavHostController,
     viewModel: NoteDetailViewModel = hiltViewModel()
 ) {
@@ -81,7 +82,7 @@ fun NoteDetailScreen(
                 },
                 actions = {
                     Icon(
-                        imageVector = if (state.isSynced) Icons.Filled.Check else Icons.Filled.Close,
+                        imageVector = if (isSynced) Icons.Filled.Check else Icons.Filled.Close,
                         contentDescription = null,
                         tint = if (state.isSynced) MaterialTheme.colorScheme.primary else Color.Gray,
                         modifier = Modifier.padding(horizontal = Paddings.ExtraSmall)

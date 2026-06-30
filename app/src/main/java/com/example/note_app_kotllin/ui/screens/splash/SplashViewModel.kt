@@ -32,7 +32,6 @@ class SplashViewModel @Inject constructor(
                 _state.update { it.copy(isAuthenticated = true, isLoading = false) }
             }else{
                 _state.update { it.copy(isAuthenticated = false, isLoading = false) }
-
             }
         }
     }

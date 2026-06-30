@@ -5,12 +5,12 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
-
 }
 
 android {
     namespace = "com.example.note_app_kotllin"
     compileSdk = 35
+
 
     defaultConfig {
         applicationId = "com.example.note_app_kotllin"
@@ -38,6 +38,7 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -66,6 +67,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.androidx.ui)
     ksp(libs.androidx.room.compiler)
 
     // di
@@ -80,6 +82,8 @@ dependencies {
     implementation(libs.okhttp.core)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.serialization)
+    implementation(libs.okhttp.logging.interceptor)
+
 
     // test
     testImplementation(libs.junit)

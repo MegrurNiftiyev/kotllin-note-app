@@ -83,7 +83,7 @@ fun LoginScreen(
                     snackbarData = data,
                     containerColor = if (state.isSuccess) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.errorContainer,
-                    contentColor = if (state.isSuccess) MaterialTheme.colorScheme.onPrimaryContainer
+                    contentColor = if (state.isSuccess) MaterialTheme.colorScheme.onPrimary
                     else MaterialTheme.colorScheme.onErrorContainer,
                     shape = RoundedCornerShape(BorderRadiuses.Medium)
                 )
