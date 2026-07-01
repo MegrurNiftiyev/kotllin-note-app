@@ -1,8 +1,7 @@
 package com.example.note_app_kotllin.data.datasoruces.remote.services
-
-import com.example.note_app_kotllin.data.models.request.NoteRequest // İstək modeli (title, content və s.)
+import com.example.note_app_kotllin.data.models.request.NoteRequest
 import com.example.note_app_kotllin.data.models.response.NoteListResponse
-import com.example.note_app_kotllin.data.models.response.NoteResponse // Cavab modeli
+import com.example.note_app_kotllin.data.models.response.NoteResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

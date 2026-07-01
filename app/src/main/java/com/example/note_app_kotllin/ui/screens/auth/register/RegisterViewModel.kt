@@ -11,6 +11,7 @@ import com.example.note_app_kotllin.core.extensions.isValidUserName
 import com.example.note_app_kotllin.core.util.UiText
 import com.example.note_app_kotllin.domain.repositories.IAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -28,7 +29,7 @@ class RegisterViewModel @Inject constructor(
     fun register(userName: String, email: String, password: String, confirmPassword: String) {
         if (!validate(userName, email, password, confirmPassword)) return
 
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             _state.update { it.copy(isLoading = true, errorMessage = null) }
 
             authRepository.register(userName, email, password)

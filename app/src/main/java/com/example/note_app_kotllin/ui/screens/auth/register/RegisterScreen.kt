@@ -39,8 +39,8 @@ import com.example.note_app_kotllin.core.constants.AppDurations
 import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
 import com.example.note_app_kotllin.core.constants.Spaces
+import com.example.note_app_kotllin.core.navigation.Home
 import com.example.note_app_kotllin.core.navigation.Login
-import com.example.note_app_kotllin.core.navigation.Notes
 import com.example.note_app_kotllin.core.navigation.Register
 import com.example.note_app_kotllin.ui.screens.auth.components.CustomTextField
 import com.example.note_app_kotllin.ui.screens.auth.components.RichText
@@ -71,7 +71,7 @@ fun RegisterScreen(
         if (state.isSuccess) {
             snackBarHostState.showSnackbar(registerSuccessMessage)
             delay(AppDurations.MediumPlus)
-            navController.navigate(Notes) {
+            navController.navigate(Home) {
                 popUpTo(Register) {
                     inclusive = true
                 }
@@ -148,9 +148,12 @@ fun RegisterScreen(
                 )
                 Spacer(modifier = Modifier.height(Spaces.LargeMinus))
                 OutlinedButton(
+
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(Paddings.SmallMinus), onClick = {
+                        .height(70.dp)
+                        .padding(Paddings.Tiny),
+                    onClick = {
 
                         viewModel.register(
                             userNameTextInput,
@@ -175,7 +178,7 @@ fun RegisterScreen(
                 RichText(
                     startText = stringResource(R.string.already_have_account),
                     clickableText = stringResource(R.string.login_lowercase),
-                        onLinkClicked = { navController.navigate(Login) },
+                    onLinkClicked = { navController.navigate(Login) },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .height(40.dp)

@@ -1,4 +1,5 @@
 package com.example.note_app_kotllin.ui.screens.notes
+import kotlinx.coroutines.Dispatchers.IO
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,7 +26,7 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun listenLocalNotes() {
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             notesRepository.getAllNotes().collect { notes ->
                 _state.update { it.copy(notes = notes) }
             }
@@ -33,7 +34,7 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun syncNotes() {
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             _state.update { it.copy(isLoading = true) }
             notesRepository.syncNotes()
                 .onSuccess { _state.update { it.copy(isLoading = false, errorMessage = null) } }
@@ -42,7 +43,7 @@ class NotesViewModel @Inject constructor(
     }
 
     fun refreshNotes() {
-        viewModelScope.launch {
+        viewModelScope.launch (IO){
             _state.update { it.copy(isRefreshing = true) }
             notesRepository.syncNotes()
                 .onSuccess { _state.update { it.copy(isRefreshing = false, errorMessage = null) } }

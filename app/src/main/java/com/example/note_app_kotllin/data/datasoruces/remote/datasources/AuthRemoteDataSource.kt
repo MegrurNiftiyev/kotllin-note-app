@@ -31,10 +31,8 @@ class AuthRemoteDataSource @Inject constructor(
                 else -> AuthException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("REGISTER", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("REGISTER", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw AuthException.Unknown()
         }
     }
@@ -42,7 +40,6 @@ class AuthRemoteDataSource @Inject constructor(
     suspend fun login(email: String, password: String): LoginResponse {
         return try {
             authApiService.login(LoginRequest(email, password))
-
         } catch (e: HttpException) {
             throw when (e.code()) {
                 401 -> AuthException.InvalidCredentials()
@@ -51,10 +48,8 @@ class AuthRemoteDataSource @Inject constructor(
                 else -> AuthException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("LOGIN", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("LOGIN", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw AuthException.Unknown()
         }
 
@@ -71,10 +66,8 @@ class AuthRemoteDataSource @Inject constructor(
                 else -> AuthException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("REFRESH", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("REFRESH", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw AuthException.Unknown()
         }
     }
@@ -89,10 +82,8 @@ class AuthRemoteDataSource @Inject constructor(
                 else -> AuthException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("LOGOUT", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("LOGOUT", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw AuthException.Unknown()
         }
     }

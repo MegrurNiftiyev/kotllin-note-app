@@ -23,18 +23,16 @@ class AuthRepository @Inject constructor(
     override suspend fun register(userName: String, email: String, password: String): Result<User> {
         return try {
             val response = remoteDataSource.register(userName, email, password)
+
             encryptedCacheManager.saveSecureString(
                 CacheKeys.ACCESS_TOKEN, response.data.accessToken
             )
             encryptedCacheManager.saveSecureString(
                 CacheKeys.REFRESH_TOKEN, response.data.refreshToken
             )
+
             val user = response.data.user
-
             localDataSource.saveUser(user.toEntityUser())
-
-            android.util.Log.e("REGISTER", response.data.toString())
-
             Result.success(user.toDomainUser())
         } catch (e: AuthException) {
             Result.failure(e)
@@ -51,17 +49,13 @@ class AuthRepository @Inject constructor(
             encryptedCacheManager.saveSecureString(
                 CacheKeys.ACCESS_TOKEN, response.data.accessToken
             )
+
             encryptedCacheManager.saveSecureString(
                 CacheKeys.REFRESH_TOKEN, response.data.refreshToken
             )
 
             val user = response.data.user
-
             localDataSource.saveUser(user.toEntityUser())
-
-            android.util.Log.e("LOGIN", response.data.toString())
-            android.util.Log.e("USER CACHED TABLE", localDataSource.getCurrentUser().toString())
-
             Result.success(user.toDomainUser())
 
         } catch (e: AuthException) {

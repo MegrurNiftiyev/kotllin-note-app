@@ -73,7 +73,6 @@ class NotesRepository @Inject constructor(
 
             Result.success(noteDto.toDomainNote())
         } catch (e: Exception) {
-//            Result.success(Note(localId, title, content, currentTime, currentTime))
             Result.failure(e)
         }
     }
@@ -98,7 +97,6 @@ class NotesRepository @Inject constructor(
             noteLocalDataSource.insertNote(noteDto.toEntityNote(isSynced = true))
             Result.success(noteDto.toDomainNote())
         } catch (e: Exception) {
-//            Result.success(Note(id, title, content, currentTime, currentTime))
             Result.failure(e)
         }
     }

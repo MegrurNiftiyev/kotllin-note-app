@@ -39,13 +39,14 @@ object NetworkModule {
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-         //   level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-         //   } else {
-           //     HttpLoggingInterceptor.Level.NONE
+            //   level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+            //   } else {
+            //     HttpLoggingInterceptor.Level.NONE
 //}
         }
     }
+
     @Provides
     @Singleton
     @Named("NormalOkHttpClient")
@@ -55,8 +56,8 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor
 
     ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(authInterceptor).addInterceptor (  loggingInterceptor)
+        return OkHttpClient.Builder().addInterceptor(authInterceptor)
+            .addInterceptor(loggingInterceptor)
             // .authenticator(tokenAuthenticator)
             .build()
     }
@@ -67,11 +68,8 @@ object NetworkModule {
     fun provideAuthRetrofit(
         @Named("AuthOkHttpClient") okHttpClient: OkHttpClient
     ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(ApiUrls.BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(json.asConverterFactory(contentType))
-            .build()
+        return Retrofit.Builder().baseUrl(ApiUrls.BASE_URL).client(okHttpClient)
+            .addConverterFactory(json.asConverterFactory(contentType)).build()
     }
 
     @Provides
@@ -80,11 +78,8 @@ object NetworkModule {
     fun provideAppRetrofit(
         @Named("NormalOkHttpClient") okHttpClient: OkHttpClient
     ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(ApiUrls.BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(json.asConverterFactory(contentType))
-            .build()
+        return Retrofit.Builder().baseUrl(ApiUrls.BASE_URL).client(okHttpClient)
+            .addConverterFactory(json.asConverterFactory(contentType)).build()
     }
 
     @Provides

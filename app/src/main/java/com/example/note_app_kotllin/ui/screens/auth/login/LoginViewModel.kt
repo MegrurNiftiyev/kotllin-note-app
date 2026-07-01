@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers.IO
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -27,7 +28,7 @@ class LoginViewModel @Inject constructor(
 
     fun login(email: String, password: String) {
         if (!validate(email, password)) return
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             _state.update { it.copy(isLoading = true, errorMessage = null) }
             authRepository.login(email, password).onSuccess {
                 _state.update { it.copy(isLoading = false, isSuccess = true) }

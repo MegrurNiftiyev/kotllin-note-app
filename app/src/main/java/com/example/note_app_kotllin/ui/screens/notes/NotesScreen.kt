@@ -2,25 +2,20 @@ package com.example.note_app_kotllin.ui.screens.notes
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,8 +30,9 @@ import com.example.note_app_kotllin.R
 import com.example.note_app_kotllin.core.constants.Paddings
 import com.example.note_app_kotllin.core.constants.Spaces
 import com.example.note_app_kotllin.core.navigation.NoteDetail
-import com.example.note_app_kotllin.core.navigation.Settings
+import com.example.note_app_kotllin.ui.components.EmptyStateBox
 import com.example.note_app_kotllin.ui.screens.notes.components.NoteCard
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotesScreen(
@@ -48,36 +44,18 @@ fun NotesScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = { Text(stringResource(R.string.app_name)) },
-                    actions = {
-                        IconButton(onClick = { navController.navigate(Settings) }) {
-                            Icon(
-                                Icons.Default.Settings,
-                                contentDescription = stringResource(id = R.string.settings_title)
-                            )
-                        }
-                    }
-                )
-                HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
-            }
-        },
+
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
                 onClick = { navController.navigate(NoteDetail("", "", "", true)) },
-                modifier = Modifier.padding(bottom = parentPadding.calculateBottomPadding()- Paddings.Medium)
+                modifier = Modifier.offset(y =  parentPadding.calculateBottomPadding())
             ) {
                 Icon(Icons.Default.Add, contentDescription = null)
             }
-        }
-    ) {
+        }) {
 
-        Box(
-
-        ) {
+        Box {
             if (state.isLoading && state.notes.isEmpty()) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             } else {
@@ -87,40 +65,32 @@ fun NotesScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     if (state.notes.isEmpty()) {
-                        EmptyState()
+                        EmptyStateBox(stringResource(R.string.notes_empty_state))
                     } else {
                         LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = parentPadding.calculateTopPadding()),
                             contentPadding = PaddingValues(Paddings.Medium),
                             verticalArrangement = Arrangement.spacedBy(Spaces.Medium)
                         ) {
                             items(state.notes) { pair ->
                                 NoteCard(
-                                    title = pair.title,
-                                    subtitle = pair.content,
-                                    onClick = {
+                                    title = pair.title, subtitle = pair.content, onClick = {
                                         navController.navigate(
-                                            NoteDetail(pair.id, pair.title, pair.content, pair.isSynced)
+                                            NoteDetail(
+                                                pair.id,
+                                                pair.title,
+                                                pair.content,
+                                                pair.isSynced
+                                            )
                                         )
-                                    }
-                                )
+                                    })
                             }
                         }
                     }
                 }
             }
         }
-    }
-}
-@Composable
-fun EmptyState() {
-    Box(
-        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = stringResource(R.string.notes_empty_state),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }

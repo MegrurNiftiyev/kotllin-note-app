@@ -24,10 +24,8 @@ class NoteRemoteDataSource @Inject constructor(
                 else -> NoteException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("NOTE GET_ALL", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("NOTE GET_ALL", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw NoteException.Unknown()
         }
     }
@@ -44,10 +42,8 @@ class NoteRemoteDataSource @Inject constructor(
                 else -> NoteException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("NOTE GET_BY_ID", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("NOTE GET_BY_ID", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw NoteException.Unknown()
         }
     }
@@ -63,10 +59,8 @@ class NoteRemoteDataSource @Inject constructor(
                 else -> NoteException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("NOTE CREATE", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("NOTE CREATE", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw NoteException.Unknown()
         }
     }
@@ -83,10 +77,8 @@ class NoteRemoteDataSource @Inject constructor(
                 else -> NoteException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("NOTE UPDATE", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("NOTE UPDATE", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw NoteException.Unknown()
         }
     }
@@ -101,10 +93,8 @@ class NoteRemoteDataSource @Inject constructor(
                 else -> NoteException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("NOTE DELETE_ALL", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("NOTE DELETE_ALL", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw NoteException.Unknown()
         }
     }
@@ -121,10 +111,8 @@ class NoteRemoteDataSource @Inject constructor(
                 else -> NoteException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("NOTE DELETE_BY_ID", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("NOTE DELETE_BY_ID", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw NoteException.Unknown()
         }
     }

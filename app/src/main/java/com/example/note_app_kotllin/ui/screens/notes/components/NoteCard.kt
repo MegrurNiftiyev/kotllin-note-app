@@ -19,6 +19,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.note_app_kotllin.core.constants.BorderRadiuses
+import com.example.note_app_kotllin.core.constants.Paddings
+import com.example.note_app_kotllin.core.constants.Spaces
 
 @Preview
 @Composable
@@ -29,14 +32,14 @@ fun NoteCard(title: String = "Title", subtitle: String = "Subtitle", onClick: ()
             .heightIn(max = 120.dp)
             .shadow(
                 elevation = 3.dp,
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(BorderRadiuses.Medium),
                 clip = false
             )
             .background(
                 color = MaterialTheme.colorScheme.background,
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(BorderRadiuses.Medium)
             )
-            .clickable { onClick() } .padding(12.dp)
+            .clickable { onClick() } .padding(Paddings.Small)
 
     ) {
         Column {
@@ -45,7 +48,7 @@ fun NoteCard(title: String = "Title", subtitle: String = "Subtitle", onClick: ()
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(Spaces.ExtraSmall))
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodyMedium,

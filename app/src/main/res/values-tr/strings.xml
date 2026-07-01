@@ -9,7 +9,7 @@
 
     <!-- ===== Auth ===== -->
     <string name="welcome">Not Uygulamasına Hoş Geldiniz</string>
-    <string name="welcome_back">Not Uygulamasına \n Tekrar Hoş Geldiniz</string>
+    <string name="welcome_back">Not Uygulamasına \nTekrar Hoş Geldiniz</string>
     <string name="username">Kullanıcı adı</string>
     <string name="enter_username">Kullanıcı adınızı girin</string>
     <string name="email">E-posta</string>

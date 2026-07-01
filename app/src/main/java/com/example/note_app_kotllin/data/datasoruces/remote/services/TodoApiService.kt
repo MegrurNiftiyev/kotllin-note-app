@@ -2,6 +2,7 @@ package com.example.Todo_app_kotllin.data.datasoruces.remote.services
 
 
 import com.example.note_app_kotllin.data.models.request.TodoRequest
+import com.example.note_app_kotllin.data.models.response.TodoListResponse
 import com.example.note_app_kotllin.data.models.response.TodoResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -12,9 +13,9 @@ import retrofit2.http.Path
 
 interface TodoApiService {
 
-//    @GET("/api/todos")
-//    suspend fun getAllTodos(): TodoListResponse
-//
+    @GET("/api/todos")
+    suspend fun getAllTodos(): TodoListResponse
+
     @GET("/api/todos/{id}")
     suspend fun getTodoById(@Path("id") id: String): TodoResponse
 

@@ -10,6 +10,7 @@ object Splash
 
 @Serializable
 object Register
+
 @Serializable
 object Login
 

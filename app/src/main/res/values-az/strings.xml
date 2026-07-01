@@ -9,7 +9,7 @@
 
     <!-- ===== Auth ===== -->
     <string name="welcome">Note Tətbiqinə Xoş Gəlmisiniz</string>
-    <string name="welcome_back">Note Tətbiqinə \n Yenidən Xoş Gəlmisiniz</string>
+    <string name="welcome_back">Note Tətbiqinə \nYenidən Xoş Gəlmisiniz</string>
     <string name="username">İstifadəçi adı</string>
     <string name="enter_username">İstifadəçi adınızı daxil edin</string>
     <string name="email">Email</string>
