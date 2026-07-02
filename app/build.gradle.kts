@@ -88,6 +88,7 @@ dependencies {
 
     //debug
     implementation(libs.timber)
+    debugImplementation(libs.leakcanary.android)
 
     // test
     testImplementation(libs.junit)

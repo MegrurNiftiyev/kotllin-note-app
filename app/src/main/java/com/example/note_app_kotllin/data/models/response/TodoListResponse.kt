@@ -10,5 +10,5 @@ data class TodoListResponse(
     val data: TodoList
 ) {
     @Serializable
-    data class TodoList(val notes: List<TodoDto>)
+    data class TodoList(val todos: List<TodoDto>)
 }

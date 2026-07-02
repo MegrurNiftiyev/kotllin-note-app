@@ -7,5 +7,4 @@ data class Todo(
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis(),
     val isSynced: Boolean,
-    val isDeleted: Boolean = false
 )

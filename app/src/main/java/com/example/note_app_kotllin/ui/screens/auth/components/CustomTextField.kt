@@ -64,7 +64,7 @@ fun CustomTextField(
         )
         if (isError) {
             Text(
-                text = errorMessage!!.asString(),
+                text = errorMessage.asString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(top = Paddings.Tiny, start = Paddings.Small)
