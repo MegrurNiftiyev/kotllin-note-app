@@ -2,8 +2,9 @@ package com.example.note_app_kotllin.ui.screens.todo.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -17,7 +18,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -29,18 +32,21 @@ import androidx.compose.ui.unit.dp
 import com.example.note_app_kotllin.core.constants.AppDurations
 import com.example.note_app_kotllin.core.constants.BorderRadiuses
 import com.example.note_app_kotllin.core.constants.Paddings
-
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TodoCard(
-    description: String,
+    initialDescription: String,
     isCompleted: Boolean,
     isFocused: Boolean,
+    onFocusLost: (String) -> Unit,
+    onFocusGained: () -> Unit,
     onTextChange: (String) -> Unit,
-    onFocusChange: (Boolean) -> Unit,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    onLongClick: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
-
+    var text by remember(initialDescription) { mutableStateOf(initialDescription) }
+    var hasReceivedFocus by remember { mutableStateOf(false) }
 
     val textColor by animateColorAsState(
         targetValue = if (isCompleted) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
@@ -59,15 +65,14 @@ fun TodoCard(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(max = 120.dp)
-            .shadow(
-                elevation = 3.dp, shape = RoundedCornerShape(BorderRadiuses.Medium), clip = false
+            .shadow(elevation = 3.dp, shape = RoundedCornerShape(BorderRadiuses.Medium), clip = false)
+            .background(color = MaterialTheme.colorScheme.background, shape = RoundedCornerShape(BorderRadiuses.Medium))
+            .combinedClickable(
+                onClick = { focusRequester.requestFocus() },
+                onLongClick = onLongClick
             )
-            .background(
-                color = MaterialTheme.colorScheme.background,
-                shape = RoundedCornerShape(BorderRadiuses.Medium)
-            )
-            .clickable { focusRequester.requestFocus() }
-            .padding(Paddings.Small)) {
+            .padding(Paddings.Small)
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
@@ -75,12 +80,23 @@ fun TodoCard(
             Checkbox(checked = isCompleted, onCheckedChange = onCheckedChange)
 
             BasicTextField(
-                value = description,
-                onValueChange = onTextChange,
+                value = text,
+                onValueChange = {
+                    text = it
+                    onTextChange(it)
+                },
                 modifier = Modifier
                     .weight(1f)
                     .focusRequester(focusRequester)
-                    .onFocusChanged { onFocusChange(it.isFocused) },
+                    .onFocusChanged { focusState ->
+                        if (focusState.isFocused) {
+                            hasReceivedFocus = true
+                            onFocusGained()
+                        } else if (hasReceivedFocus) {
+                            onFocusLost(text)
+                            hasReceivedFocus = false
+                        }
+                    },
                 textStyle = MaterialTheme.typography.bodyLarge.copy(
                     color = textColor,
                     textDecoration = if (isCompleted) TextDecoration.LineThrough else TextDecoration.None
@@ -89,4 +105,3 @@ fun TodoCard(
         }
     }
 }
-
