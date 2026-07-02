@@ -1,5 +1,6 @@
 package com.example.note_app_kotllin.ui.screens.todo
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import com.example.note_app_kotllin.core.constants.Paddings
 import com.example.note_app_kotllin.core.constants.Spaces
 import com.example.note_app_kotllin.ui.screens.todo.components.TodoCard
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoScreen(
@@ -37,13 +39,12 @@ fun TodoScreen(
         FloatingActionButton(
             containerColor = MaterialTheme.colorScheme.primary,
             onClick = {},
-            modifier = Modifier.offset(y = parentPadding.calculateBottomPadding())
+            modifier = Modifier.offset(y = -parentPadding.calculateBottomPadding())
 
         ) {
             Icon(Icons.Default.Edit, contentDescription = null)
         }
     }) {
-
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(top = parentPadding.calculateTopPadding()),
             contentPadding = PaddingValues(Paddings.Medium),

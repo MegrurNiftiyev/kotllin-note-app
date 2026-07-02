@@ -45,20 +45,20 @@ fun LanguageBottomSheet(
 
             LangItem(
                 context = context,
-                langCode = LanguageCodes.az,
+                langCode = LanguageCodes.Az,
                 languageResId = R.string.lang_az,
                 onDismissRequest = onDismissRequest
             )
 
             LangItem(
                 context = context,
-                langCode = LanguageCodes.en,
+                langCode = LanguageCodes.En,
                 languageResId = R.string.lang_en,
                 onDismissRequest = onDismissRequest
             )
             LangItem(
                 context = context,
-                langCode = LanguageCodes.tr,
+                langCode = LanguageCodes.Tr,
                 languageResId = R.string.lang_tr,
                 onDismissRequest = onDismissRequest
             )

@@ -18,8 +18,7 @@ class NoteLocalDataSource @Inject constructor(
         notes.forEach { noteDao.insertNote(it) }
     }
 
-    suspend fun deleteNote(note: NoteEntity) = noteDao.deleteNote(note)
-
+    suspend fun getLocallyDeletedNotes(): List<NoteEntity> = noteDao.getLocallyDeletedNotes()
     suspend fun deleteNoteById(id: String) = noteDao.deleteNoteById(id)
 
     suspend fun deleteAllNotes() = noteDao.deleteAllNotes()

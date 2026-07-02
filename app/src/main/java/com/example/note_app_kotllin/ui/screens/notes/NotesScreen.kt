@@ -1,5 +1,6 @@
 package com.example.note_app_kotllin.ui.screens.notes
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,6 +34,7 @@ import com.example.note_app_kotllin.core.navigation.NoteDetail
 import com.example.note_app_kotllin.ui.components.EmptyStateBox
 import com.example.note_app_kotllin.ui.screens.notes.components.NoteCard
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotesScreen(
@@ -49,12 +51,11 @@ fun NotesScreen(
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
                 onClick = { navController.navigate(NoteDetail("", "", "", true)) },
-                modifier = Modifier.offset(y =  parentPadding.calculateBottomPadding())
+                modifier = Modifier.offset(y = -parentPadding.calculateBottomPadding())
             ) {
                 Icon(Icons.Default.Add, contentDescription = null)
             }
         }) {
-
         Box {
             if (state.isLoading && state.notes.isEmpty()) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))

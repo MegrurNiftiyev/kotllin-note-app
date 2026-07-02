@@ -1,7 +1,6 @@
 package com.example.note_app_kotllin.ui.screens.notedetail
 
 import androidx.compose.foundation.background
-import com.example.note_app_kotllin.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,15 +37,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.note_app_kotllin.R
 import com.example.note_app_kotllin.core.constants.Paddings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteDetailScreen(
-    id: String = "",
-    title: String = "",
-    subtitle: String = "",
-    isSynced: Boolean = true,
+    id: String,
+    title: String,
+    subtitle: String,
+    isSynced: Boolean,
     navController: NavHostController,
     viewModel: NoteDetailViewModel = hiltViewModel()
 ) {
@@ -54,6 +54,15 @@ fun NoteDetailScreen(
     var subtitleTextInput by remember { mutableStateOf(subtitle) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
+
+    val textFieldColors = TextFieldDefaults.colors(
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent,
+        disabledContainerColor = Color.Transparent,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledIndicatorColor = Color.Transparent
+    )
 
     DisposableEffect(Unit) {
         onDispose {
@@ -70,44 +79,38 @@ fun NoteDetailScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(" ") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(id = R.string.cd_back)
-                        )
-                    }
-                },
-                actions = {
+            TopAppBar(title = { Text(" ") }, navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
-                        imageVector = if (isSynced) Icons.Filled.Check else Icons.Filled.Close,
-                        contentDescription = null,
-                        tint = if (state.isSynced) MaterialTheme.colorScheme.primary else Color.Gray,
-                        modifier = Modifier.padding(horizontal = Paddings.ExtraSmall)
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.cd_back)
                     )
-                    IconButton(
-                        onClick = {
-                            viewModel.deleteNoteDirectly(id)
-                            navController.popBackStack()
-                        }
-                    ) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = stringResource(id = R.string.cd_delete)
-                        )
-                    }
-                    IconButton(onClick = {  }) {
-                        Icon(
-                            Icons.Default.Share,
-                            contentDescription = stringResource(id = R.string.cd_share)
-                        )
-                    }
                 }
-            )
-        }
-    ) { innerPadding ->
+            }, actions = {
+                Icon(
+                    imageVector = if (isSynced) Icons.Filled.Check else Icons.Filled.Close,
+                    contentDescription = null,
+                    tint = if (state.isSynced) MaterialTheme.colorScheme.primary else Color.Gray,
+                    modifier = Modifier.padding(horizontal = Paddings.ExtraSmall)
+                )
+                IconButton(
+                    onClick = {
+                        viewModel.deleteNote(id)
+                        navController.popBackStack()
+                    }) {
+                    Icon(
+                        Icons.Default.Delete,
+                        contentDescription = stringResource(id = R.string.cd_delete)
+                    )
+                }
+                IconButton(onClick = { }) {
+                    Icon(
+                        Icons.Default.Share,
+                        contentDescription = stringResource(id = R.string.cd_share)
+                    )
+                }
+            })
+        }) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
@@ -118,18 +121,13 @@ fun NoteDetailScreen(
             TextField(
                 value = titleTextInput,
                 onValueChange = { titleTextInput = it },
-                modifier = Modifier.fillMaxWidth().background(color = Color.Transparent),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.Transparent),
                 textStyle = MaterialTheme.typography.titleLarge,
                 maxLines = 3,
                 placeholder = { Text(stringResource(id = R.string.hint_title)) },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
-                )
+                colors = textFieldColors
             )
             HorizontalDivider(
                 thickness = 1.dp,
@@ -142,14 +140,7 @@ fun NoteDetailScreen(
                 modifier = Modifier.fillMaxSize(),
                 textStyle = MaterialTheme.typography.bodyLarge,
                 placeholder = { Text(stringResource(id = R.string.hint_subtitle)) },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
-                )
+                colors = textFieldColors
             )
         }
     }

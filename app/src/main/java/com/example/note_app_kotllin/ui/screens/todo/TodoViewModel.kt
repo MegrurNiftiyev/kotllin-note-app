@@ -2,8 +2,11 @@ package com.example.note_app_kotllin.ui.screens.todo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.Todo_app_kotllin.data.datasoruces.remote.services.TodoApiService
+import com.example.note_app_kotllin.data.repostories.TodoRepository
 import com.example.note_app_kotllin.domain.models.Todo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,20 +15,30 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TodoViewModel @Inject constructor() : ViewModel() {
+class TodoViewModel @Inject constructor(
+    private  val todoRepository: TodoRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(TodoState())
     val state: StateFlow<TodoState> = _state.asStateFlow()
 
 
     init {
-        getTodos()
+        listenLocalNotes()
     }
 
+
+    private fun listenLocalNotes() {
+        viewModelScope.launch(IO) {
+            todoRepository.getAllTodos().collect { todos ->
+                _state.update { it.copy(todos = todos) }
+            }
+        }
+    }
     fun getTodos() {
         val todos: List<Todo> = listOf(
             Todo("1", "Todo 1", false, isSynced = false),
-            Todo("2", "Todo 2", false, isSynced = false),
+            Todo("2", "TodoTodoTodoTodoTodoTodo TodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodoTodo TodoTodoTodoTodoTodoTodo 2", true, isSynced = false),
             Todo("3", "Todo 3", true, isSynced = false),
         )
         viewModelScope.launch {

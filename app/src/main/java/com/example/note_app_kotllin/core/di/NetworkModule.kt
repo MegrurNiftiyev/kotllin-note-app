@@ -1,6 +1,7 @@
 package com.example.note_app_kotllin.core.di
-//import com.example.note_app_kotllin.BuildConfig
 
+import com.example.Todo_app_kotllin.data.datasoruces.remote.services.TodoApiService
+import com.example.note_app_kotllin.BuildConfig
 import com.example.note_app_kotllin.core.constants.ApiUrls
 import com.example.note_app_kotllin.core.interceptors.AuthInterceptor
 import com.example.note_app_kotllin.core.interceptors.TokenAuthenticator
@@ -39,11 +40,11 @@ object NetworkModule {
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-            //   level = if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor.Level.BODY
-            //   } else {
-            //     HttpLoggingInterceptor.Level.NONE
-//}
+            if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
         }
     }
 
@@ -98,5 +99,11 @@ object NetworkModule {
     @Singleton
     fun provideNoteApiService(@Named("AppRetrofit") retrofit: Retrofit): NoteApiService {
         return retrofit.create(NoteApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNTodoApiService(@Named("AppRetrofit") retrofit: Retrofit): TodoApiService {
+        return retrofit.create(TodoApiService::class.java)
     }
 }

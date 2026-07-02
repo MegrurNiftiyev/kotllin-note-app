@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -85,6 +86,8 @@ dependencies {
     implementation(libs.retrofit.converter.serialization)
     implementation(libs.okhttp.logging.interceptor)
 
+    //debug
+    implementation(libs.timber)
 
     // test
     testImplementation(libs.junit)

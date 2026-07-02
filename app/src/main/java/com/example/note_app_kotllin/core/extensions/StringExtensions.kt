@@ -14,3 +14,7 @@ fun String.isValidUserName(): Boolean {
     val userNameRegex = """^[a-zA-Z0-9._-]{3,}$""".toRegex()
     return userNameRegex.matches(this)
 }
+
+fun String.addLocalBanner(): String = "LOCAL_$this"
+
+fun String.isLocal(): Boolean = this.startsWith("LOCAL_")

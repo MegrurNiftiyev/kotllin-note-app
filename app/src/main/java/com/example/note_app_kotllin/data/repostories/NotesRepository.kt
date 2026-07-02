@@ -1,11 +1,14 @@
 package com.example.note_app_kotllin.data.repostories
 
+import com.example.note_app_kotllin.core.extensions.addLocalBanner
+import com.example.note_app_kotllin.core.extensions.isLocal
 import com.example.note_app_kotllin.data.datasoruces.local.NoteLocalDataSource
 import com.example.note_app_kotllin.data.datasoruces.local.room.entities.NoteEntity
 import com.example.note_app_kotllin.data.datasoruces.remote.datasources.NoteRemoteDataSource
 import com.example.note_app_kotllin.domain.models.Note
 import com.example.note_app_kotllin.domain.repositories.INotesRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.util.UUID
 import javax.inject.Inject
@@ -24,15 +27,51 @@ class NotesRepository @Inject constructor(
 
     override suspend fun syncNotes(): Result<Unit> {
         return try {
+            val locallyDeletedNotes = noteLocalDataSource.getLocallyDeletedNotes()
+            locallyDeletedNotes.forEach { localNote ->
+                try {
+                    val isNewNote = localNote.id.isLocal()
+
+                    if (isNewNote) {
+                        noteLocalDataSource.deleteNoteById(localNote.id)
+                    } else {
+                        noteRemoteDataSource.deleteNoteById(localNote.id)
+                        noteLocalDataSource.deleteNoteById(localNote.id)
+                    }
+                } catch (e: Exception) {
+
+                }
+            }
+
+            val unsyncedNotes = noteLocalDataSource.getAllNotes().first().filter { !it.isSynced }
+            unsyncedNotes.forEach { localNote ->
+                try {
+                    val isNewNote = localNote.id.isLocal()
+
+                    if (isNewNote) {
+                        val response = noteRemoteDataSource.createNote(localNote.title, localNote.content)
+                        val serverNote = response.data.note
+                        noteLocalDataSource.deleteNoteById(localNote.id)
+                        noteLocalDataSource.insertNote(serverNote.toEntityNote(isSynced = true))
+                    } else {
+                        val response = noteRemoteDataSource.updateNote(localNote.id, localNote.title, localNote.content)
+                        val serverNote = response.data.note
+                        noteLocalDataSource.insertNote(serverNote.toEntityNote(isSynced = true))
+                    }
+                } catch (e: Exception) {
+
+                }
+            }
+
             val response = noteRemoteDataSource.getAllNotes()
             val entities = response.data.notes.map { it.toEntityNote(isSynced = true) }
             noteLocalDataSource.insertNotes(entities)
+
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
-
 
     override suspend fun getNoteById(id: String): Result<Note> {
         return try {
@@ -51,7 +90,7 @@ class NotesRepository @Inject constructor(
     }
 
     override suspend fun createNote(title: String, content: String): Result<Note> {
-        val localId = UUID.randomUUID().toString()
+        val localId = UUID.randomUUID().toString().addLocalBanner()
         val currentTime = System.currentTimeMillis()
 
         val initialLocalEntity = NoteEntity(
@@ -60,7 +99,8 @@ class NotesRepository @Inject constructor(
             content = content,
             createdAt = currentTime,
             updatedAt = currentTime,
-            isSynced = false
+            isSynced = false,
+            isDeleted = false
         )
         noteLocalDataSource.insertNote(initialLocalEntity)
 
@@ -73,7 +113,7 @@ class NotesRepository @Inject constructor(
 
             Result.success(noteDto.toDomainNote())
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.success(initialLocalEntity.toDomainNote())
         }
     }
 
@@ -86,7 +126,8 @@ class NotesRepository @Inject constructor(
             content = content,
             createdAt = currentTime,
             updatedAt = currentTime,
-            isSynced = false
+            isSynced = false,
+            isDeleted = false
         )
         noteLocalDataSource.insertNote(updatedLocalEntity)
 
@@ -97,7 +138,7 @@ class NotesRepository @Inject constructor(
             noteLocalDataSource.insertNote(noteDto.toEntityNote(isSynced = true))
             Result.success(noteDto.toDomainNote())
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.success(updatedLocalEntity.toDomainNote())
         }
     }
 
@@ -107,7 +148,11 @@ class NotesRepository @Inject constructor(
             noteLocalDataSource.deleteNoteById(id)
             Result.success(Unit)
         } catch (e: Exception) {
-            Result.failure(e)
+            val localNote = noteLocalDataSource.getNoteById(id)
+            if (localNote != null) {
+                noteLocalDataSource.insertNote(localNote.copy(isDeleted = true, isSynced = false))
+            }
+            Result.success(Unit)
         }
     }
 
@@ -117,7 +162,8 @@ class NotesRepository @Inject constructor(
             noteLocalDataSource.deleteAllNotes()
             Result.success(Unit)
         } catch (e: Exception) {
-            Result.failure(e)
+            noteLocalDataSource.deleteAllNotes()
+            Result.success(Unit)
         }
     }
 }

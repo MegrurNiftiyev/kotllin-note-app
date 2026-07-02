@@ -1,4 +1,4 @@
-package com.example.note_app_kotllin.data.datasoruces.local.room.daos
+package com.example.todo_app_kotllin.data.datasoruces.local.room.daos
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -11,14 +11,20 @@ import kotlinx.coroutines.flow.Flow
 interface TodoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNote(todo: TodoEntity)
+    suspend fun insertTodo(todo: TodoEntity)
 
-    @Query("SELECT * FROM Todos ORDER BY createdAt DESC")
-    fun getAllNotes(): Flow<List<TodoEntity>>
+    @Query("SELECT * FROM Todos WHERE isDeleted = 0 ORDER BY createdAt DESC")
+    fun getAllTodos(): Flow<List<TodoEntity>>
 
     @Query("SELECT * FROM Todos WHERE id = :todoId LIMIT 1")
-    suspend fun getNoteById(todoId: String): TodoEntity?
+    suspend fun getTodoById(todoId: String): TodoEntity?
 
-    @Delete
-    suspend fun deleteNote(todo: TodoEntity)
+    @Query("DELETE FROM Todos WHERE id = :todoId")
+    suspend fun deleteTodoById(todoId: String)
+
+    @Query("DELETE FROM Todos")
+    suspend fun deleteAllTodos()
+
+    @Query("SELECT * FROM Todos WHERE isDeleted = 1 AND isSynced = 0")
+    suspend fun getLocallyDeletedTodos(): List<TodoEntity>
 }

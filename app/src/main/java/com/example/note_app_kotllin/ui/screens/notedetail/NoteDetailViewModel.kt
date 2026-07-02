@@ -62,7 +62,7 @@ class NoteDetailViewModel @Inject constructor(
         }
     }
 
-    fun deleteNoteDirectly(id: String) {
+    fun deleteNote(id: String) {
         if (id.isNotEmpty()) {
             viewModelScope.launch {
                 withContext(NonCancellable) {

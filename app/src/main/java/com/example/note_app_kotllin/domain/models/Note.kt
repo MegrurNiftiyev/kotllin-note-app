@@ -1,12 +1,11 @@
 package com.example.note_app_kotllin.domain.models
 
-import java.util.UUID
-
 data class Note(
-    val id: String= UUID.randomUUID().toString(),
+    val id: String,
     val title: String,
-    val content : String,
-    val createdAt: Long = System.currentTimeMillis(),
-    val updatedAt: Long = System.currentTimeMillis(),
+    val content: String,
+    val createdAt: Long,
+    val updatedAt: Long,
     val isSynced: Boolean
+
 )

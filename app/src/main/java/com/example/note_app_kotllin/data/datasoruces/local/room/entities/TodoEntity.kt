@@ -19,9 +19,10 @@ data class TodoEntity (
         return Todo(
             id = this.id,
             description = this.description,
+            isCompleted = this.isCompleted,
             createdAt = this.createdAt,
             updatedAt = this.updatedAt,
-            isSynced = this.isSynced
+            isSynced = this.isSynced,
         )
 
     }

@@ -6,13 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface ITodoRepository {
 
-
-
-
-
      fun getAllTodos(): Flow<List<Todo>>
 
-    suspend fun syncNotes(): Result<Unit>
+    suspend fun syncTodos(): Result<Unit>
 
     suspend fun getTodoById(id: String): Result<Todo>
     suspend fun createTodo(note: Note): Result<Todo>
