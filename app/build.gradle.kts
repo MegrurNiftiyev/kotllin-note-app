@@ -48,7 +48,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
@@ -61,16 +60,23 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
 
-    // cache & coroutines
+    // cache
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.security.crypto)
-    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.compose.foundation.layout)
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.compose.animation.core)
+    implementation(libs.androidx.compose.runtime)
     ksp(libs.androidx.room.compiler)
+
+    //coroutines
+    implementation(libs.kotlinx.coroutines.android)
+
+    // ui & compose
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.androidx.compose.animation.core)
+    implementation(libs.coil.compose)
+    implementation(libs.compose.shimmer)
 
     // di
     implementation(libs.hilt.android)

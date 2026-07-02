@@ -1,7 +1,7 @@
 package com.example.note_app_kotllin.data.datasoruces.local
 
 import com.example.note_app_kotllin.data.datasoruces.local.room.entities.TodoEntity
-import com.example.todo_app_kotllin.data.datasoruces.local.room.daos.TodoDao
+import com.example.note_app_kotllin.data.datasoruces.local.room.daos.TodoDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

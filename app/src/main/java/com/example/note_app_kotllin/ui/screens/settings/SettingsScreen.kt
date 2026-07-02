@@ -1,15 +1,20 @@
-
 package com.example.note_app_kotllin.ui.screens.settings
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
+import android.widget.Space
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -26,21 +31,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.note_app_kotllin.R
+import com.example.note_app_kotllin.core.constants.ApiUrls
+import com.example.note_app_kotllin.core.constants.Paddings
 import com.example.note_app_kotllin.core.constants.Spaces
 import com.example.note_app_kotllin.core.extensions.getCurrentLanguage
-import com.example.note_app_kotllin.core.navigation.Notes
 import com.example.note_app_kotllin.core.navigation.Register
 import com.example.note_app_kotllin.core.navigation.Settings
 import com.example.note_app_kotllin.ui.components.LanguageBottomSheet
 import com.example.note_app_kotllin.ui.screens.settings.components.SettingTile
+import com.example.note_app_kotllin.ui.screens.settings.components.UserImage
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,6 +80,28 @@ fun SettingsScreen(
                 .verticalScroll(scrollState)
                 .fillMaxSize()
         ) {
+            Row(modifier = Modifier.padding(vertical = Paddings.Medium) ){
+                Box(
+                    modifier = Modifier.padding(horizontal = Paddings.Medium)
+                        .size(70.dp)
+                        .clip(CircleShape)
+                        .border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = CircleShape)
+                ) {
+                    UserImage(ApiUrls.USER_MOCK_IMAGE)
+                }
+                Column {
+                    Text(
+                        state.userName,
+
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                    Spacer(Modifier.height(Spaces.Mini))
+                    Text(
+                        state.userEmail, style = MaterialTheme.typography.bodySmall
+
+                    )
+                }
+            }
             SettingTile(
                 title = stringResource(R.string.settings_language),
                 onClick = { viewModel.openLanguageSheet() },
@@ -98,7 +129,7 @@ fun SettingsScreen(
                             inclusive = true
                         }
                     }
-                          },
+                },
                 trailingContent = {
                     Text(
                         text = stringResource(R.string.settings_logout),

@@ -14,8 +14,8 @@ class UserLocalDataSource @Inject constructor(
         userDao.insertUser(user)
     }
 
-    suspend fun getCurrentUser(): Flow<UserEntity> {
-        return userDao.getCurrentUser()
+    suspend fun getUser(): UserEntity? {
+        return userDao.getUser()
     }
 
     suspend fun clearUser() {

@@ -13,7 +13,7 @@ interface UserDao{
     suspend fun insertUser(user: UserEntity)
 
     @Query("SELECT * FROM User LIMIT 1")
-    fun getCurrentUser(): Flow<UserEntity>
+   suspend fun getUser(): UserEntity?
 
     @Query("DELETE FROM User")
    suspend fun clearUser()

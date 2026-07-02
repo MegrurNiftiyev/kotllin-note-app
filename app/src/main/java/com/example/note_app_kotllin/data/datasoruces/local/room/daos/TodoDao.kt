@@ -1,7 +1,6 @@
-package com.example.todo_app_kotllin.data.datasoruces.local.room.daos
+package com.example.note_app_kotllin.data.datasoruces.local.room.daos
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query

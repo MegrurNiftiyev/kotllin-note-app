@@ -25,10 +25,8 @@ class UserRemoteDataSource @Inject constructor(
                 else -> UserException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("USER GET", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("USER GET", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw AuthException.Unknown()
         }
     }
@@ -47,10 +45,8 @@ class UserRemoteDataSource @Inject constructor(
                 else -> UserException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("USER UPDATE", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("USER UPDATE", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw AuthException.Unknown()
         }
 
@@ -68,10 +64,8 @@ class UserRemoteDataSource @Inject constructor(
                 else -> UserException.Unknown()
             }
         } catch (e: IOException) {
-            android.util.Log.e("USER DELETE", "Network error — ${e.message}")
             throw NetworkException.NoInternet()
         } catch (e: Exception) {
-            android.util.Log.e("USER DELETE", "Unknown — ${e::class.simpleName}: ${e.message}")
             throw AuthException.Unknown()
         }
     }
